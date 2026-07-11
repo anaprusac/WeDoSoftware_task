@@ -1,19 +1,26 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WeDoSoftware.Application.Common.Interfaces;
+using WeDoSoftware.Infrastructure.Auth;
+using WeDoSoftware.Infrastructure.Configuration;
+using WeDoSoftware.Infrastructure.Email;
 using WeDoSoftware.Infrastructure.Identity;
 using WeDoSoftware.Infrastructure.Persistence;
 
 namespace WeDoSoftware.Infrastructure;
 
 /// <summary>
-/// Composition root for the Infrastructure layer. The API calls <see cref="AddInfrastructure"/>
-/// and passes only the connection string, so this layer never depends on the web configuration.
+/// Composition root for the Infrastructure layer: database, Identity, JWT/email services and options.
 /// </summary>
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string connectionString)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        var connectionString = configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
+
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString, npgsql => npgsql.EnableRetryOnFailure()));
 
@@ -33,9 +40,16 @@ public static class DependencyInjection
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
         })
         .AddRoles<IdentityRole<Guid>>()
-        .AddEntityFrameworkStores<AppDbContext>();
-        // Token providers (for password-reset tokens) are added in M2 together with the
-        // ASP.NET Core framework reference they require.
+        .AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders(); // password-reset tokens
+
+        services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
+        services.Configure<SmtpOptions>(configuration.GetSection(SmtpOptions.SectionName));
+        services.Configure<AppOptions>(configuration.GetSection(AppOptions.SectionName));
+
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IEmailSender, SmtpEmailSender>();
 
         return services;
     }

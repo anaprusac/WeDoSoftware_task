@@ -25,6 +25,13 @@ services:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
       ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=${POSTGRES_DB:-wedosoftware};Username=${POSTGRES_USER:-wedosoftware};Password=${POSTGRES_PASSWORD:-wedosoftware_dev_pw}"
       Cors__AllowedOrigins__0: "http://localhost:4200"
+      App__FrontendBaseUrl: ${FRONTEND_BASE_URL:-http://localhost:4200}
+      # Optional Gmail SMTP for real password-reset emails (falls back to logging if unset).
+      Smtp__Username: ${SMTP_USERNAME:-}
+      Smtp__Password: ${SMTP_PASSWORD:-}
+      Smtp__FromAddress: ${SMTP_FROM_ADDRESS:-}
+      # Jwt__Secret intentionally not set here: the dev secret comes from appsettings.Development.json;
+      # in production set Jwt__Secret via the environment.
     ports:
       - "8080:8080"
     depends_on:
