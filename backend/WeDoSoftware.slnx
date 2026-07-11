@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/WeDoSoftware.Api/WeDoSoftware.Api.csproj" />
+    <Project Path="src/WeDoSoftware.Application/WeDoSoftware.Application.csproj" />
+    <Project Path="src/WeDoSoftware.Domain/WeDoSoftware.Domain.csproj" />
+    <Project Path="src/WeDoSoftware.Infrastructure/WeDoSoftware.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/WeDoSoftware.Tests/WeDoSoftware.Tests.csproj" />
+  </Folder>
+</Solution>
