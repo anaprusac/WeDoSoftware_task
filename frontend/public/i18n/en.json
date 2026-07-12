@@ -1,0 +1,42 @@
+{
+  "app": {
+    "name": "WeDoSoftware",
+    "tagline": "Track your progress"
+  },
+  "nav": {
+    "home": "Home",
+    "findWorkout": "Find workout",
+    "statistics": "Monthly statistics",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "auth": {
+    "welcome": "Welcome!",
+    "workSmarter": "Work smarter",
+    "keepTrack": "Keep track of your progress",
+    "signIn": "Sign In",
+    "username": "Username",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "newHere": "New here? Create account",
+    "loginFailed": "Invalid username or password.",
+    "loggedOut": "You have been signed out."
+  },
+  "common": {
+    "loading": "Loading…",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "error": "Something went wrong. Please try again."
+  },
+  "theme": {
+    "toggle": "Toggle light/dark theme"
+  },
+  "language": {
+    "label": "Language",
+    "english": "English",
+    "serbian": "Serbian"
+  }
+}

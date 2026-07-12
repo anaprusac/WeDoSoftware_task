@@ -1,0 +1,7 @@
+.flag {
+  display: inline-block;
+  width: 22px;
+  height: auto;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--color-border);
+}

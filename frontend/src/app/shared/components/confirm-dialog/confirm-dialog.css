@@ -1,0 +1,10 @@
+.confirm__message {
+  margin-bottom: var(--space-5);
+  color: var(--color-text);
+}
+
+.confirm__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}

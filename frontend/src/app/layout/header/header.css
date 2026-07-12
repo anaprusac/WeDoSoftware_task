@@ -1,0 +1,55 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: var(--header-height);
+  padding: 0 var(--space-4);
+  background-color: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+}
+
+.header__menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 40px;
+  border: 1px solid color-mix(in srgb, var(--color-text-inverse) 40%, transparent);
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  color: inherit;
+  transition: background-color var(--transition-fast);
+}
+
+.header__menu-btn:hover {
+  background-color: color-mix(in srgb, var(--color-text-inverse) 12%, transparent);
+}
+
+.header__spacer {
+  flex: 1;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.header__username {
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.header__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  background-color: color-mix(in srgb, var(--color-text-inverse) 92%, transparent);
+  color: var(--color-surface-inverse);
+}

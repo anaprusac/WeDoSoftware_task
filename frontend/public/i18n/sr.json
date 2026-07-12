@@ -1,0 +1,42 @@
+{
+  "app": {
+    "name": "WeDoSoftware",
+    "tagline": "Prati svoj napredak"
+  },
+  "nav": {
+    "home": "Početna",
+    "findWorkout": "Pronađi trening",
+    "statistics": "Mesečna statistika",
+    "profile": "Profil",
+    "logout": "Odjava"
+  },
+  "auth": {
+    "welcome": "Dobrodošli!",
+    "workSmarter": "Vežbaj pametnije",
+    "keepTrack": "Prati svoj napredak",
+    "signIn": "Prijava",
+    "username": "Korisničko ime",
+    "password": "Lozinka",
+    "forgotPassword": "Zaboravljena lozinka?",
+    "newHere": "Nemaš nalog? Registruj se",
+    "loginFailed": "Neispravno korisničko ime ili lozinka.",
+    "loggedOut": "Odjavljeni ste."
+  },
+  "common": {
+    "loading": "Učitavanje…",
+    "cancel": "Otkaži",
+    "save": "Sačuvaj",
+    "close": "Zatvori",
+    "yes": "Da",
+    "no": "Ne",
+    "error": "Došlo je do greške. Pokušajte ponovo."
+  },
+  "theme": {
+    "toggle": "Promeni svetlu/tamnu temu"
+  },
+  "language": {
+    "label": "Jezik",
+    "english": "Engleski",
+    "serbian": "Srpski"
+  }
+}

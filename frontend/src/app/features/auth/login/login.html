@@ -1,0 +1,35 @@
+<div class="login">
+  <form class="login__card card" [formGroup]="form" (ngSubmit)="submit()">
+    <h1 class="login__title">{{ 'auth.signIn' | translate }}</h1>
+
+    <div class="field">
+      <label class="field__label" for="usernameOrEmail">{{ 'auth.username' | translate }}</label>
+      <input
+        id="usernameOrEmail"
+        class="text-input"
+        type="text"
+        formControlName="usernameOrEmail"
+        autocomplete="username"
+      />
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="password">{{ 'auth.password' | translate }}</label>
+      <input
+        id="password"
+        class="text-input"
+        type="password"
+        formControlName="password"
+        autocomplete="current-password"
+      />
+    </div>
+
+    @if (errorKey()) {
+      <p class="field__error">{{ errorKey()! | translate }}</p>
+    }
+
+    <button type="submit" class="btn btn--block" [disabled]="submitting()">
+      {{ 'auth.signIn' | translate }}
+    </button>
+  </form>
+</div>

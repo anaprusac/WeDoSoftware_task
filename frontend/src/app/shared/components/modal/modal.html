@@ -1,0 +1,13 @@
+<div class="backdrop" (click)="close.emit()"></div>
+
+<div class="panel" role="dialog" aria-modal="true">
+  @if (showClose()) {
+    <button type="button" class="panel__close" (click)="close.emit()" aria-label="Close">✕</button>
+  }
+  @if (title()) {
+    <h2 class="panel__title">{{ title() }}</h2>
+  }
+  <div class="panel__content">
+    <ng-content />
+  </div>
+</div>

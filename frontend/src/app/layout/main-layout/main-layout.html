@@ -1,0 +1,9 @@
+<app-header (menuToggle)="menuOpen.set(true)" />
+
+@if (menuOpen()) {
+  <app-hamburger-menu (close)="menuOpen.set(false)" />
+}
+
+<main class="content">
+  <router-outlet />
+</main>

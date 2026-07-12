@@ -1,0 +1,20 @@
+<header class="header">
+  <button type="button" class="header__menu-btn" (click)="menuToggle.emit()" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <div class="header__spacer"></div>
+
+  <div class="header__actions">
+    <app-theme-toggle />
+    <app-language-switcher />
+    <span class="header__username">{{ user()?.username }}</span>
+    <span class="header__avatar" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+        <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.42 0-8 2.61-8 5.83V21h16v-1.17C20 16.61 16.42 14 12 14Z" />
+      </svg>
+    </span>
+  </div>
+</header>

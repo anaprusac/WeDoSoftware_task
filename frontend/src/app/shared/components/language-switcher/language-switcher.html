@@ -1,0 +1,31 @@
+<div class="lang" (mouseleave)="close()">
+  <button
+    type="button"
+    class="lang__trigger"
+    (click)="toggle()"
+    [attr.aria-expanded]="open()"
+    [attr.aria-label]="'language.label' | translate"
+  >
+    <app-flag [lang]="currentLang()" />
+    <span class="lang__name">{{ labelKeyFor(currentLang()) | translate }}</span>
+    <span class="lang__caret" aria-hidden="true">▾</span>
+  </button>
+
+  @if (open()) {
+    <ul class="lang__menu" role="listbox">
+      @for (option of options; track option.code) {
+        <li>
+          <button
+            type="button"
+            class="lang__option"
+            [class.lang__option--active]="option.code === currentLang()"
+            (click)="select(option.code)"
+          >
+            <app-flag [lang]="option.code" />
+            <span>{{ option.labelKey | translate }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</div>

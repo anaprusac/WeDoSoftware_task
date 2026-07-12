@@ -1,0 +1,13 @@
+@if (state(); as state) {
+  <app-modal [title]="state.title" [showClose]="false" (close)="respond(false)">
+    <p class="confirm__message">{{ state.message }}</p>
+    <div class="confirm__actions">
+      <button type="button" class="btn btn--ghost" (click)="respond(false)">
+        {{ state.cancelText ?? ('common.no' | translate) }}
+      </button>
+      <button type="button" class="btn" [class.btn--danger]="state.danger" (click)="respond(true)">
+        {{ state.confirmText ?? ('common.yes' | translate) }}
+      </button>
+    </div>
+  </app-modal>
+}
