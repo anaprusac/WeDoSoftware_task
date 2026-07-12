@@ -31,6 +31,9 @@ export class CalendarModal {
 
   readonly close = output<void>();
 
+  /** Guards against overlapping requests if prev/next is clicked rapidly. */
+  readonly loading = signal(false);
+
   private readonly today = new Date();
   readonly year = signal(this.today.getFullYear());
   readonly month = signal(this.today.getMonth() + 1); // 1-12
@@ -76,6 +79,9 @@ export class CalendarModal {
   }
 
   prevMonth(): void {
+    if (this.loading()) {
+      return;
+    }
     if (this.month() === 1) {
       this.month.set(12);
       this.year.update((y) => y - 1);
@@ -86,7 +92,7 @@ export class CalendarModal {
   }
 
   nextMonth(): void {
-    if (!this.canGoNext()) {
+    if (this.loading() || !this.canGoNext()) {
       return;
     }
     if (this.month() === 12) {
@@ -107,8 +113,10 @@ export class CalendarModal {
   }
 
   private loadMonth(): void {
-    this.workoutService
-      .getCalendarDays(this.year(), this.month())
-      .subscribe((days) => this.workoutDays.set(new Set(days)));
+    this.loading.set(true);
+    this.workoutService.getCalendarDays(this.year(), this.month()).subscribe((days) => {
+      this.workoutDays.set(new Set(days));
+      this.loading.set(false);
+    });
   }
 }

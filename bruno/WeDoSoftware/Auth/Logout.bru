@@ -1,0 +1,17 @@
+meta {
+  name: Logout
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/auth/logout
+  body: none
+  auth: none
+}
+
+docs {
+  Revokes the current refresh token (from the cookie) and clears it. The access token in
+  {{accessToken}} simply expires naturally (it isn't revocable — that's the point of it being
+  short-lived) but is no longer usable to obtain a fresh one via Refresh.
+}

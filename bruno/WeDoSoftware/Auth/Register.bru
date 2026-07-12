@@ -1,0 +1,37 @@
+meta {
+  name: Register
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "newuser@example.com",
+    "username": "newuser",
+    "password": "NewUserP1!",
+    "confirmPassword": "NewUserP1!",
+    "gender": "Male",
+    "age": 28,
+    "heightCm": 180,
+    "weightKg": 78
+  }
+}
+
+script:post-response {
+  if (res.body.accessToken) {
+    bru.setVar("accessToken", res.body.accessToken);
+  }
+}
+
+docs {
+  Creates a new account and logs it in. BMI is computed and stored server-side from
+  heightCm/weightKg. The response's accessToken is saved to the `accessToken` collection
+  variable so subsequent authenticated requests work immediately. The refresh token is
+  returned as an http-only cookie, which Bruno's client stores and resends automatically.
+}

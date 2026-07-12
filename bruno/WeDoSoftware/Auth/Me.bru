@@ -1,0 +1,20 @@
+meta {
+  name: Me
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/api/auth/me
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+docs {
+  Returns the authenticated user's profile (including the current BMI and preferences).
+  Run Login first.
+}

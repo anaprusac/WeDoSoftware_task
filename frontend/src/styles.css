@@ -288,6 +288,11 @@ svg {
   text-decoration: underline;
 }
 
+.loading-text {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
 /* ==========================================================================
    Auth surfaces — the login card and register/reset modals are dark with light
    pill inputs in both themes, matching frames 1–3.

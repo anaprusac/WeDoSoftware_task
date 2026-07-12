@@ -1,0 +1,32 @@
+meta {
+  name: Update
+  type: http
+  seq: 1
+}
+
+put {
+  url: {{baseUrl}}/api/profile
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "heightCm": 182,
+    "weightKg": 82,
+    "preferredLanguage": "en",
+    "themePreference": "Light",
+    "preferredUnitSystem": "Metric"
+  }
+}
+
+docs {
+  Full-replace update of the editable profile fields (this is why every field is required in
+  the body, even ones you aren't changing) — height/weight (BMI is recomputed from them),
+  language, theme and preferred unit system. The frontend calls this both from the profile
+  page's auto-save and whenever the header's theme/language controls are used while logged in.
+}

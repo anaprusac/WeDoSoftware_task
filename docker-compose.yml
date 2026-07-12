@@ -38,5 +38,15 @@ services:
       db:
         condition: service_healthy
 
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: wedosoftware-web
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+
 volumes:
   pgdata:

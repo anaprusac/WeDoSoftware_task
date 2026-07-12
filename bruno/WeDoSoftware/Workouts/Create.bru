@@ -1,0 +1,33 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/workouts
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "type": "Cardio",
+    "performedAt": "2026-07-05T18:30:00",
+    "durationMinutes": 45,
+    "calories": 420,
+    "tiredness": 6,
+    "notes": "Evening run"
+  }
+}
+
+docs {
+  Logs a workout. Intensity is NOT sent — the server computes and stores it from type,
+  durationMinutes and the user's gender. performedAt must not be in the future and not before
+  the user turned 8 (both enforced server-side, HTTP 400 otherwise). See Workouts/Get Types for
+  the valid `type` values.
+}

@@ -1,0 +1,25 @@
+meta {
+  name: Get By Date
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/api/workouts/by-date?date=2026-07-08
+  body: none
+  auth: bearer
+}
+
+params:query {
+  date: 2026-07-08
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+docs {
+  All workouts performed on the given date, chronologically — what the "workout detail" page
+  shows after picking a day on the calendar. The seeded demo user has two workouts on
+  2026-07-08 (one deliberately seeded to exercise this multi-workout view).
+}

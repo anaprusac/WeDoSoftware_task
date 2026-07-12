@@ -13,12 +13,16 @@
     </span>
   </button>
 
-  @for (workout of workouts(); track workout.id) {
-    <app-workout-card [workout]="workout" />
-  }
+  @if (!loaded()) {
+    <p class="loading-text">{{ 'common.loading' | translate }}</p>
+  } @else {
+    @for (workout of workouts(); track workout.id) {
+      <app-workout-card [workout]="workout" />
+    }
 
-  @if (loaded() && workouts().length === 0) {
-    <p class="home__empty">{{ 'home.noWorkouts' | translate }}</p>
+    @if (workouts().length === 0) {
+      <p class="home__empty">{{ 'home.noWorkouts' | translate }}</p>
+    }
   }
 </div>
 
