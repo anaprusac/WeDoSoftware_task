@@ -68,6 +68,55 @@
     "passwordsMismatch": "Passwords do not match.",
     "passwordWeak": "Password does not meet the requirements."
   },
+  "workoutType": {
+    "Cardio": "Cardio",
+    "Strength": "Strength training",
+    "MobilityFlexibility": "Mobility & Flexibility",
+    "Rehabilitation": "Rehabilitation",
+    "FullBody": "Full body",
+    "UpperBody": "Upper body",
+    "LowerBody": "Lower body",
+    "Core": "Core",
+    "Other": "Other"
+  },
+  "home": {
+    "addWorkout": "Add workout",
+    "findWorkout": "Find workout by the date",
+    "noWorkouts": "No workouts yet — add your first one!"
+  },
+  "workout": {
+    "addTitle": "Add workout",
+    "type": "Workout type",
+    "selectType": "Select…",
+    "date": "Date",
+    "time": "Time",
+    "duration": "Duration",
+    "calories": "Calories",
+    "optional": "optional",
+    "tiredness": "Tiredness",
+    "intensity": "Intensity",
+    "notes": "Notes",
+    "kcal": "kcal",
+    "caloriesBurned": "Calories burned",
+    "tirednessInfo": "Rate how tired you felt after the workout, from 1 (not tired at all) to 10 (exhausted).",
+    "intensityInfo": "Intensity is calculated automatically from the workout type, duration and gender.",
+    "discardTitle": "Discard workout?",
+    "discardMessage": "Are you sure? The workout you entered will not be saved.",
+    "saveTitle": "Save workout?",
+    "saveMessage": "Save this workout?",
+    "saved": "Workout saved.",
+    "futureError": "Workout date and time cannot be in the future.",
+    "viewDetail": "View workout details"
+  },
+  "calendar": {
+    "title": "Find workout",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "hint": "Only days with recorded workouts can be opened."
+  },
+  "detail": {
+    "empty": "No workouts recorded for this day."
+  },
   "common": {
     "loading": "Loading…",
     "cancel": "Cancel",

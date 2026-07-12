@@ -6,6 +6,8 @@ import { ResetPassword } from './features/auth/reset-password/reset-password';
 import { Home } from './features/home/home';
 import { Profile } from './features/profile/profile';
 import { Statistics } from './features/statistics/statistics';
+import { AddWorkout } from './features/workout/add-workout/add-workout';
+import { WorkoutDetail } from './features/workout/workout-detail/workout-detail';
 import { MainLayout } from './layout/main-layout/main-layout';
 
 export const routes: Routes = [
@@ -17,6 +19,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'home', component: Home },
+      { path: 'workouts/add', component: AddWorkout },
+      { path: 'workouts/date/:date', component: WorkoutDetail },
       { path: 'statistics', component: Statistics },
       { path: 'profile', component: Profile },
       { path: '', pathMatch: 'full', redirectTo: 'home' },

@@ -1,0 +1,133 @@
+.add {
+  max-width: 920px;
+}
+
+.add__title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-5);
+}
+
+.add__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.add__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.add__field--type {
+  max-width: 440px;
+}
+
+.add__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 700;
+}
+
+.add__optional {
+  font-weight: 400;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.add__row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.add__duration {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.add__dur-input {
+  width: 4.5rem;
+  text-align: center;
+}
+
+.add__inline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.add__inline .text-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.add__unit {
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.add__intensity {
+  background-color: var(--color-surface-2);
+  font-weight: 700;
+  text-align: center;
+}
+
+.add__notes-row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);
+}
+
+.add__notes {
+  flex: 1;
+  min-height: 92px;
+  resize: vertical;
+}
+
+.add__actions {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.add__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-text-inverse);
+}
+
+.add__btn--cancel {
+  background-color: var(--color-surface-inverse);
+}
+
+.add__btn--cancel:hover {
+  background-color: var(--color-danger);
+}
+
+.add__btn--save {
+  background-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.add__btn--save:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+}
+
+.add__btn:disabled {
+  opacity: 0.6;
+}
+
+@media (max-width: 720px) {
+  .add__row {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,18 @@
+<article class="wcard">
+  <header class="wcard__header">{{ dateLabel() }}</header>
+  <div class="wcard__body">
+    <div class="wcard__top">
+      <span class="wcard__type">{{ 'workoutType.' + workout().type | translate }}</span>
+      <span class="wcard__duration">{{ duration() }}</span>
+    </div>
+    <p class="wcard__metric">{{ 'workout.intensity' | translate }} {{ workout().intensity }}/10</p>
+    <p class="wcard__metric">{{ 'workout.tiredness' | translate }} {{ workout().tiredness }}/10</p>
+
+    <a class="wcard__view" [routerLink]="['/workouts/date', dateParam()]" [attr.aria-label]="'workout.viewDetail' | translate">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="m21 21-4.3-4.3" />
+      </svg>
+    </a>
+  </div>
+</article>

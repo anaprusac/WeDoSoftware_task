@@ -1,0 +1,82 @@
+<div class="add">
+  <h1 class="add__title">{{ 'workout.addTitle' | translate }}</h1>
+
+  <form class="add__form" [formGroup]="form" (ngSubmit)="save()">
+    <div class="add__field add__field--type">
+      <label class="add__label" for="wt-type">{{ 'workout.type' | translate }}</label>
+      <select id="wt-type" class="text-input" formControlName="type">
+        <option value="" disabled>{{ 'workout.selectType' | translate }}</option>
+        @for (option of types(); track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="add__row">
+      <div class="add__field">
+        <label class="add__label" for="wt-date">{{ 'workout.date' | translate }}</label>
+        <input id="wt-date" class="text-input" type="date" formControlName="date" [max]="maxDate" />
+      </div>
+      <div class="add__field">
+        <label class="add__label" for="wt-time">{{ 'workout.time' | translate }}</label>
+        <input id="wt-time" class="text-input" type="time" formControlName="time" />
+      </div>
+      <div class="add__field">
+        <label class="add__label">{{ 'workout.duration' | translate }}</label>
+        <div class="add__duration">
+          <input class="text-input add__dur-input" type="number" min="0" max="24" formControlName="hours" [attr.aria-label]="'workout.duration' | translate" />
+          <span class="add__unit">h</span>
+          <input class="text-input add__dur-input" type="number" min="0" max="59" formControlName="minutes" [attr.aria-label]="'workout.duration' | translate" />
+          <span class="add__unit">min</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="add__row">
+      <div class="add__field">
+        <label class="add__label">
+          {{ 'workout.calories' | translate }} <span class="add__optional">({{ 'workout.optional' | translate }})</span>
+        </label>
+        <div class="add__inline">
+          <input class="text-input" type="number" min="0" formControlName="calories" />
+          <span class="add__unit">{{ 'workout.kcal' | translate }}</span>
+        </div>
+      </div>
+      <div class="add__field">
+        <label class="add__label">
+          {{ 'workout.tiredness' | translate }} <app-info-tooltip [text]="'workout.tirednessInfo' | translate" />
+        </label>
+        <div class="add__inline">
+          <input class="text-input" type="number" min="1" max="10" formControlName="tiredness" />
+          <span class="add__unit">/10</span>
+        </div>
+      </div>
+      <div class="add__field">
+        <label class="add__label">
+          {{ 'workout.intensity' | translate }} <app-info-tooltip [text]="'workout.intensityInfo' | translate" />
+        </label>
+        <div class="add__inline">
+          <input class="text-input add__intensity" type="text" [value]="intensity() ?? 0" readonly tabindex="-1" [attr.aria-label]="'workout.intensity' | translate" />
+          <span class="add__unit">/10</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="add__field">
+      <label class="add__label" for="wt-notes">
+        {{ 'workout.notes' | translate }} <span class="add__optional">({{ 'workout.optional' | translate }})</span>
+      </label>
+      <div class="add__notes-row">
+        <textarea id="wt-notes" class="text-input add__notes" rows="3" formControlName="notes"></textarea>
+        <div class="add__actions">
+          <button type="button" class="add__btn add__btn--cancel" (click)="cancel()" [attr.aria-label]="'common.cancel' | translate">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+          </button>
+          <button type="submit" class="add__btn add__btn--save" [disabled]="submitting()" [attr.aria-label]="'common.save' | translate">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -68,6 +68,55 @@
     "passwordsMismatch": "Lozinke se ne poklapaju.",
     "passwordWeak": "Lozinka ne ispunjava uslove."
   },
+  "workoutType": {
+    "Cardio": "Kardio",
+    "Strength": "Trening snage",
+    "MobilityFlexibility": "Mobilnost i fleksibilnost",
+    "Rehabilitation": "Rehabilitacija",
+    "FullBody": "Celo telo",
+    "UpperBody": "Gornji deo tela",
+    "LowerBody": "Donji deo tela",
+    "Core": "Trbušnjaci",
+    "Other": "Drugo"
+  },
+  "home": {
+    "addWorkout": "Dodaj trening",
+    "findWorkout": "Pronađi trening po datumu",
+    "noWorkouts": "Još nema treninga — dodaj prvi!"
+  },
+  "workout": {
+    "addTitle": "Dodaj trening",
+    "type": "Vrsta treninga",
+    "selectType": "Izaberi…",
+    "date": "Datum",
+    "time": "Vreme",
+    "duration": "Trajanje",
+    "calories": "Kalorije",
+    "optional": "opciono",
+    "tiredness": "Umor",
+    "intensity": "Intenzitet",
+    "notes": "Beleške",
+    "kcal": "kcal",
+    "caloriesBurned": "Potrošene kalorije",
+    "tirednessInfo": "Ocenite koliko ste bili umorni posle treninga, od 1 (niste uopšte umorni) do 10 (premoreni ste).",
+    "intensityInfo": "Intenzitet se automatski računa na osnovu vrste treninga, trajanja i pola.",
+    "discardTitle": "Odustati od treninga?",
+    "discardMessage": "Da li ste sigurni? Uneti trening neće biti sačuvan.",
+    "saveTitle": "Sačuvati trening?",
+    "saveMessage": "Sačuvati ovaj trening?",
+    "saved": "Trening je sačuvan.",
+    "futureError": "Datum i vreme treninga ne mogu biti u budućnosti.",
+    "viewDetail": "Prikaži detalje treninga"
+  },
+  "calendar": {
+    "title": "Pronađi trening",
+    "prevMonth": "Prethodni mesec",
+    "nextMonth": "Sledeći mesec",
+    "hint": "Mogu se otvoriti samo dani sa zabeleženim treninzima."
+  },
+  "detail": {
+    "empty": "Nema zabeleženih treninga za ovaj dan."
+  },
   "common": {
     "loading": "Učitavanje…",
     "cancel": "Otkaži",

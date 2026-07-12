@@ -1,0 +1,26 @@
+<div class="detail">
+  <h1 class="detail__date">{{ dateLabel }}</h1>
+
+  @for (workout of workouts(); track workout.id; let last = $last) {
+    <section class="detail__item">
+      <h2 class="detail__time">{{ time(workout) }}</h2>
+      <p class="detail__row"><span class="detail__label">{{ 'workout.type' | translate }}:</span> {{ 'workoutType.' + workout.type | translate }}</p>
+      <p class="detail__row"><span class="detail__label">{{ 'workout.duration' | translate }}:</span> {{ duration(workout) }}</p>
+      <p class="detail__row"><span class="detail__label">{{ 'workout.intensity' | translate }}:</span> {{ workout.intensity }}/10</p>
+      <p class="detail__row"><span class="detail__label">{{ 'workout.tiredness' | translate }}:</span> {{ workout.tiredness }}/10</p>
+      @if (workout.calories !== null) {
+        <p class="detail__row"><span class="detail__label">{{ 'workout.caloriesBurned' | translate }}:</span> {{ workout.calories }} {{ 'workout.kcal' | translate }}</p>
+      }
+      @if (workout.notes) {
+        <p class="detail__row"><span class="detail__label">{{ 'workout.notes' | translate }}:</span> {{ workout.notes }}</p>
+      }
+      @if (!last) {
+        <hr class="detail__separator" />
+      }
+    </section>
+  }
+
+  @if (loaded() && workouts().length === 0) {
+    <p class="detail__empty">{{ 'detail.empty' | translate }}</p>
+  }
+</div>

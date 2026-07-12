@@ -1,0 +1,36 @@
+.detail {
+  max-width: 820px;
+}
+
+.detail__date {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+.detail__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.detail__time {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.detail__label {
+  font-weight: 700;
+}
+
+.detail__separator {
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--color-border-strong);
+  margin: var(--space-5) 0;
+}
+
+.detail__empty {
+  color: var(--color-text-muted);
+}

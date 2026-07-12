@@ -1,10 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Workout } from '../../core/models/workout.model';
+import { WorkoutService } from '../../core/services/workout.service';
+import { CalendarModal } from '../calendar/calendar-modal/calendar-modal';
+import { WorkoutCard } from '../../shared/components/workout-card/workout-card';
 
-/** Placeholder — the dashboard (add/find workout + cards) is built in M7. */
+/** Home dashboard (frame 4): add/find actions + the user's workouts, most recent first. */
 @Component({
   selector: 'app-home',
-  imports: [TranslatePipe],
-  template: `<h1 class="page-title">{{ 'nav.home' | translate }}</h1>`,
+  imports: [RouterLink, TranslatePipe, CalendarModal, WorkoutCard],
+  templateUrl: './home.html',
+  styleUrl: './home.css',
 })
-export class Home {}
+export class Home {
+  private readonly workoutService = inject(WorkoutService);
+
+  readonly workouts = signal<Workout[]>([]);
+  readonly loaded = signal(false);
+  readonly calendarOpen = signal(false);
+
+  constructor() {
+    this.workoutService.getRecent().subscribe((workouts) => {
+      this.workouts.set(workouts);
+      this.loaded.set(true);
+    });
+  }
+}
