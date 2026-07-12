@@ -51,3 +51,18 @@
   margin-bottom: var(--space-4);
   font-size: var(--text-xl);
 }
+
+.panel--auth {
+  background-color: var(--color-auth-surface);
+  color: var(--color-auth-text);
+  border-color: transparent;
+}
+
+.panel--auth .panel__close {
+  background-color: color-mix(in srgb, var(--color-auth-text) 16%, transparent);
+  color: var(--color-auth-text);
+}
+
+.panel--auth .panel__close:hover {
+  background-color: color-mix(in srgb, var(--color-auth-text) 28%, transparent);
+}

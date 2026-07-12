@@ -1,35 +1,47 @@
 <div class="login">
-  <form class="login__card card" [formGroup]="form" (ngSubmit)="submit()">
-    <h1 class="login__title">{{ 'auth.signIn' | translate }}</h1>
+  <section class="welcome">
+    <h1 class="welcome__title">{{ 'auth.welcome' | translate }}</h1>
+    <h2 class="welcome__subtitle">{{ 'auth.workSmarter' | translate }}</h2>
+    <p class="welcome__text">{{ 'auth.keepTrack' | translate }}</p>
+  </section>
 
-    <div class="field">
-      <label class="field__label" for="usernameOrEmail">{{ 'auth.username' | translate }}</label>
+  <div class="signin auth-card">
+    <h2 class="signin__title">{{ 'auth.signIn' | translate }}</h2>
+
+    <form class="signin__form" [formGroup]="form" (ngSubmit)="submit()">
       <input
-        id="usernameOrEmail"
-        class="text-input"
+        class="text-input signin__field"
         type="text"
         formControlName="usernameOrEmail"
+        [placeholder]="'auth.username' | translate"
+        [attr.aria-label]="'auth.username' | translate"
         autocomplete="username"
       />
-    </div>
-
-    <div class="field">
-      <label class="field__label" for="password">{{ 'auth.password' | translate }}</label>
       <input
-        id="password"
-        class="text-input"
+        class="text-input signin__field"
         type="password"
         formControlName="password"
+        [placeholder]="'auth.password' | translate"
+        [attr.aria-label]="'auth.password' | translate"
         autocomplete="current-password"
       />
-    </div>
 
-    @if (errorKey()) {
-      <p class="field__error">{{ errorKey()! | translate }}</p>
-    }
+      @if (errorKey()) {
+        <p class="signin__error">{{ errorKey()! | translate }}</p>
+      }
 
-    <button type="submit" class="btn btn--block" [disabled]="submitting()">
-      {{ 'auth.signIn' | translate }}
-    </button>
-  </form>
+      <button type="button" class="signin__link" (click)="openForgot()">{{ 'auth.forgotPassword' | translate }}</button>
+
+      <button type="submit" class="signin__submit" [disabled]="submitting()">{{ 'auth.signInAction' | translate }}</button>
+
+      <button type="button" class="signin__link" (click)="openRegister()">{{ 'auth.newHere' | translate }}</button>
+    </form>
+  </div>
 </div>
+
+@if (showRegister()) {
+  <app-register-modal (close)="showRegister.set(false)" (registered)="onRegistered()" />
+}
+@if (showForgot()) {
+  <app-forgot-password-modal (close)="showForgot.set(false)" />
+}

@@ -1,0 +1,49 @@
+.wheel {
+  display: flex;
+  align-items: center;
+  background-color: var(--field-bg, var(--color-surface));
+  color: var(--field-text, var(--color-text));
+  border: 1px solid var(--field-border, var(--color-border-strong));
+  border-radius: var(--radius-pill);
+  padding-left: var(--space-3);
+  overflow: hidden;
+}
+
+.wheel:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-focus) 22%, transparent);
+}
+
+.wheel__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  padding: var(--space-2) 0;
+  text-align: center;
+}
+
+.wheel__input:focus {
+  outline: none;
+}
+
+.wheel__steppers {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+}
+
+.wheel__step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 19px;
+  border: none;
+  background: transparent;
+  color: color-mix(in srgb, var(--field-text, var(--color-text)) 60%, transparent);
+}
+
+.wheel__step:hover {
+  color: var(--field-text, var(--color-text));
+}

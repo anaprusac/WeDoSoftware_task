@@ -1,0 +1,67 @@
+<app-modal variant="auth" [title]="'auth.registerTitle' | translate" (close)="close.emit()">
+  <form class="register" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="register__grid">
+      <label class="register__label" for="reg-email">{{ 'auth.email' | translate }}:</label>
+      <div class="register__field">
+        <input id="reg-email" class="text-input" type="email" formControlName="email" autocomplete="email" />
+        @if (f.email.touched && f.email.invalid) {
+          <p class="register__error-text">{{ 'validation.email' | translate }}</p>
+        }
+      </div>
+
+      <label class="register__label" for="reg-username">{{ 'auth.username' | translate }}:</label>
+      <div class="register__field">
+        <input id="reg-username" class="text-input" type="text" formControlName="username" autocomplete="username" />
+        @if (f.username.touched && f.username.invalid) {
+          <p class="register__error-text">{{ 'validation.usernameLength' | translate }}</p>
+        }
+      </div>
+
+      <label class="register__label" for="reg-password">{{ 'auth.password' | translate }}:</label>
+      <div class="register__field">
+        <input id="reg-password" class="text-input" type="password" formControlName="password" autocomplete="new-password" />
+        <app-password-rules [value]="f.password.value" />
+      </div>
+
+      <label class="register__label" for="reg-repeat">{{ 'auth.repeatPassword' | translate }}:</label>
+      <div class="register__field">
+        <input id="reg-repeat" class="text-input" type="password" formControlName="repeatPassword" autocomplete="new-password" />
+        @if (f.repeatPassword.touched && form.hasError('passwordsMismatch')) {
+          <p class="register__error-text">{{ 'validation.passwordsMismatch' | translate }}</p>
+        }
+      </div>
+
+      <label class="register__label" for="reg-gender">{{ 'auth.gender' | translate }}:</label>
+      <div class="register__field">
+        <select id="reg-gender" class="text-input" formControlName="gender">
+          <option value="" disabled>{{ 'auth.selectOption' | translate }}</option>
+          <option value="Male">{{ 'auth.male' | translate }}</option>
+          <option value="Female">{{ 'auth.female' | translate }}</option>
+        </select>
+      </div>
+
+      <label class="register__label">{{ 'auth.age' | translate }}:</label>
+      <div class="register__field">
+        <app-wheel-picker [min]="8" [max]="100" [value]="f.age.value" (valueChange)="setAge($event)" [ariaLabel]="'auth.age' | translate" />
+      </div>
+
+      <label class="register__label">{{ 'auth.height' | translate }}:</label>
+      <div class="register__field register__field--measure">
+        <app-wheel-picker [min]="heightRange().min" [max]="heightRange().max" [value]="f.height.value" (valueChange)="setHeight($event)" [ariaLabel]="'auth.height' | translate" />
+        <button type="button" class="register__unit" (click)="toggleHeightUnit()">{{ 'units.' + heightUnit() | translate }}</button>
+      </div>
+
+      <label class="register__label">{{ 'auth.weight' | translate }}:</label>
+      <div class="register__field register__field--measure">
+        <app-wheel-picker [min]="weightRange().min" [max]="weightRange().max" [value]="f.weight.value" (valueChange)="setWeight($event)" [ariaLabel]="'auth.weight' | translate" />
+        <button type="button" class="register__unit" (click)="toggleWeightUnit()">{{ 'units.' + weightUnit() | translate }}</button>
+      </div>
+    </div>
+
+    @if (errorText()) {
+      <p class="register__error">{{ errorText() }}</p>
+    }
+
+    <button type="submit" class="register__submit" [disabled]="submitting()">{{ 'auth.register' | translate }}</button>
+  </form>
+</app-modal>

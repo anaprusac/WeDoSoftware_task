@@ -1,6 +1,12 @@
 <div class="backdrop" (click)="close.emit()"></div>
 
-<div class="panel" role="dialog" aria-modal="true">
+<div
+  class="panel"
+  [class.panel--auth]="variant() === 'auth'"
+  [class.auth-card]="variant() === 'auth'"
+  role="dialog"
+  aria-modal="true"
+>
   @if (showClose()) {
     <button type="button" class="panel__close" (click)="close.emit()" aria-label="Close">✕</button>
   }

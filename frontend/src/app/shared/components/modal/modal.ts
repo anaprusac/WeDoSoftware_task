@@ -10,6 +10,7 @@ import { Component, HostListener, input, output } from '@angular/core';
 export class Modal {
   readonly title = input<string>();
   readonly showClose = input(true);
+  readonly variant = input<'default' | 'auth'>('default');
   readonly close = output<void>();
 
   @HostListener('document:keydown.escape')

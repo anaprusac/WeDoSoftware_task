@@ -3,14 +3,13 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../../core/services/auth.service';
+import { ForgotPasswordModal } from '../forgot-password-modal/forgot-password-modal';
+import { RegisterModal } from '../register-modal/register-modal';
 
-/**
- * Minimal, functional sign-in — enough to verify the auth chain in M5.
- * The full frame-1 layout and the register/forgot popups are added in M6.
- */
+/** Login page (frame 1): welcome panel + sign-in card, with register/forgot popups over a dimmed page. */
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, TranslatePipe],
+  imports: [ReactiveFormsModule, TranslatePipe, RegisterModal, ForgotPasswordModal],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -21,6 +20,8 @@ export class Login {
 
   readonly submitting = signal(false);
   readonly errorKey = signal<string | null>(null);
+  readonly showRegister = signal(false);
+  readonly showForgot = signal(false);
 
   readonly form = this.fb.nonNullable.group({
     usernameOrEmail: ['', Validators.required],
@@ -43,5 +44,22 @@ export class Login {
         this.submitting.set(false);
       },
     });
+  }
+
+  openRegister(): void {
+    this.errorKey.set(null);
+    this.showForgot.set(false);
+    this.showRegister.set(true);
+  }
+
+  openForgot(): void {
+    this.errorKey.set(null);
+    this.showRegister.set(false);
+    this.showForgot.set(true);
+  }
+
+  onRegistered(): void {
+    this.showRegister.set(false);
+    this.router.navigate(['/home']);
   }
 }

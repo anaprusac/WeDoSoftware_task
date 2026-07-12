@@ -1,0 +1,21 @@
+<div class="wheel">
+  <input
+    class="wheel__input"
+    type="text"
+    inputmode="numeric"
+    [value]="value()"
+    [attr.aria-label]="ariaLabel()"
+    (input)="onInput($event)"
+    (blur)="onBlur($event)"
+    (wheel)="onWheel($event)"
+    (keydown)="onKeydown($event)"
+  />
+  <div class="wheel__steppers">
+    <button type="button" class="wheel__step" (click)="increment()" tabindex="-1" aria-label="Increase">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6" /></svg>
+    </button>
+    <button type="button" class="wheel__step" (click)="decrement()" tabindex="-1" aria-label="Decrease">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+    </button>
+  </div>
+</div>
