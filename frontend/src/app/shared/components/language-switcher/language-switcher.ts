@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Language, LanguageService } from '../../../core/services/language.service';
+import { PreferencesService } from '../../../core/services/preferences.service';
 import { FlagIcon } from '../flag-icon/flag-icon';
 
 /** Flag + name dropdown to switch language. Inherits text colour, so it works on any surface. */
@@ -12,6 +13,7 @@ import { FlagIcon } from '../flag-icon/flag-icon';
 })
 export class LanguageSwitcher {
   private readonly languageService = inject(LanguageService);
+  private readonly preferencesService = inject(PreferencesService);
 
   readonly currentLang = this.languageService.lang;
   readonly open = signal(false);
@@ -34,6 +36,7 @@ export class LanguageSwitcher {
 
   select(lang: Language): void {
     this.languageService.use(lang);
+    this.preferencesService.persistLanguage(lang);
     this.open.set(false);
   }
 }

@@ -1,0 +1,61 @@
+<div class="profile">
+  <h1 class="page-title">{{ 'profile.title' | translate }}</h1>
+
+  <div class="profile__grid">
+    <div class="profile__column">
+      <p class="profile__row">
+        <span class="profile__label">{{ 'profile.username' | translate }}:</span> {{ user()?.username }}
+      </p>
+
+      <p class="profile__row">
+        <span class="profile__label">{{ 'profile.height' | translate }}:</span>
+        <input
+          class="text-input profile__input"
+          type="number"
+          [formControl]="form.controls.height"
+          [attr.aria-label]="'profile.height' | translate"
+        />
+        <button type="button" class="profile__unit" (click)="toggleHeightUnit()">{{ 'units.' + heightUnit() | translate }}</button>
+      </p>
+
+      <p class="profile__row">
+        <span class="profile__label">{{ 'profile.weight' | translate }}:</span>
+        <input
+          class="text-input profile__input"
+          type="number"
+          [formControl]="form.controls.weight"
+          [attr.aria-label]="'profile.weight' | translate"
+        />
+        <button type="button" class="profile__unit" (click)="toggleWeightUnit()">{{ 'units.' + weightUnit() | translate }}</button>
+      </p>
+
+      <p class="profile__row">
+        <span class="profile__label">{{ 'profile.gender' | translate }}:</span> {{ ('auth.' + (user()?.gender ?? 'Male').toLowerCase()) | translate }}
+      </p>
+
+      <p class="profile__row">
+        <app-info-tooltip [text]="'profile.bmiInfo' | translate" />
+        <span class="profile__label">BMI:</span> {{ user()?.bmi ?? 0 | number: '1.2-2' }}
+      </p>
+
+      <button type="button" class="btn profile__reset" (click)="changePasswordOpen.set(true)">
+        {{ 'profile.resetPassword' | translate }}
+      </button>
+    </div>
+
+    <div class="profile__column">
+      <p class="profile__row profile__row--pref">
+        <span class="profile__label">{{ 'profile.language' | translate }}:</span>
+        <app-language-switcher />
+      </p>
+      <p class="profile__row profile__row--pref">
+        <span class="profile__label">{{ 'profile.darkMode' | translate }}:</span>
+        <app-toggle-switch [checked]="isDark()" (checkedChange)="toggleDarkMode()" [ariaLabel]="'theme.toggle' | translate" />
+      </p>
+    </div>
+  </div>
+</div>
+
+@if (changePasswordOpen()) {
+  <app-change-password-modal (close)="changePasswordOpen.set(false)" />
+}

@@ -8,6 +8,7 @@ using WeDoSoftware.Infrastructure.Configuration;
 using WeDoSoftware.Infrastructure.Email;
 using WeDoSoftware.Infrastructure.Identity;
 using WeDoSoftware.Infrastructure.Persistence;
+using WeDoSoftware.Infrastructure.Profile;
 using WeDoSoftware.Infrastructure.Statistics;
 using WeDoSoftware.Infrastructure.Workouts;
 
@@ -54,6 +55,7 @@ public static class DependencyInjection
         services.AddScoped<IEmailSender, SmtpEmailSender>();
         services.AddScoped<IWorkoutService, WorkoutService>();
         services.AddScoped<IStatisticsService, StatisticsService>();
+        services.AddScoped<IProfileService, ProfileService>();
 
         return services;
     }

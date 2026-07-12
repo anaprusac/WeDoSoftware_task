@@ -31,6 +31,13 @@ export class LanguageService {
     document.documentElement.setAttribute('lang', lang);
   }
 
+  /** Applies `lang` only if it's one of the supported codes; silently ignores anything else. */
+  useIfSupported(lang: string): void {
+    if (this.isSupported(lang)) {
+      this.use(lang);
+    }
+  }
+
   private isSupported(value: string | null): value is Language {
     return value !== null && (AVAILABLE_LANGUAGES as readonly string[]).includes(value);
   }

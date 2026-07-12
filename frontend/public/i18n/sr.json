@@ -117,6 +117,37 @@
   "detail": {
     "empty": "Nema zabeleženih treninga za ovaj dan."
   },
+  "profile": {
+    "title": "Profil",
+    "username": "Korisničko ime",
+    "height": "Visina",
+    "weight": "Težina",
+    "gender": "Pol",
+    "bmiInfo": "Indeks telesne mase = težina / visina². Referentne vrednosti: ispod 18.5 pothranjenost, 18.5–24.9 normalna težina, 25–29.9 prekomerna težina, 30 i više gojaznost.",
+    "resetPassword": "Reset lozinke",
+    "language": "Jezik",
+    "darkMode": "Tamni režim",
+    "saved": "Profil je ažuriran."
+  },
+  "changePassword": {
+    "title": "Reset lozinke",
+    "currentPassword": "Trenutna lozinka",
+    "newPassword": "Nova lozinka",
+    "repeatNewPassword": "Ponovi novu lozinku",
+    "save": "Sačuvaj",
+    "success": "Lozinka je promenjena.",
+    "currentIncorrect": "Trenutna lozinka nije ispravna."
+  },
+  "statistics": {
+    "title": "Statistika:",
+    "weekFrom": "Nedelja od",
+    "to": "do",
+    "totalPrefix": "Ukupno",
+    "totalSuffix": "treniranja",
+    "sessions": "treninga",
+    "averageIntensity": "Prosečan intenzitet",
+    "averageTiredness": "Prosečan umor"
+  },
   "common": {
     "loading": "Učitavanje…",
     "cancel": "Otkaži",

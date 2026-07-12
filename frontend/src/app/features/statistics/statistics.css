@@ -1,0 +1,42 @@
+.stats__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+.stats__select {
+  padding: var(--space-3) var(--space-5);
+  border: none;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.stats__week {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.stats__week-title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+}
+
+.stats__line {
+  display: flex;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  font-size: var(--text-lg);
+}
+
+.stats__separator {
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--color-border-strong);
+  margin: var(--space-5) 0;
+}

@@ -1,0 +1,36 @@
+<div class="stats">
+  <div class="stats__header">
+    <h1 class="page-title">{{ 'statistics.title' | translate }}</h1>
+
+    <select class="stats__select" (change)="onMonthChange($any($event.target).value)" aria-label="Month">
+      @for (option of months(); track option.value) {
+        <option [value]="option.value" [selected]="option.value === month()">{{ option.label }}</option>
+      }
+    </select>
+
+    <select class="stats__select" (change)="onYearChange($any($event.target).value)" aria-label="Year">
+      @for (y of years; track y) {
+        <option [value]="y" [selected]="y === year()">{{ y }}</option>
+      }
+    </select>
+  </div>
+
+  @if (loaded() && data()) {
+    @for (week of data()!.weeks; track week.weekStart; let last = $last) {
+      <section class="stats__week">
+        <h2 class="stats__week-title">{{ weekRangeLabel(week.weekStart, week.weekEnd) }}</h2>
+        <p class="stats__line">
+          {{ 'statistics.totalPrefix' | translate }} {{ duration(week.totalDurationMinutes) }} {{ 'statistics.totalSuffix' | translate }},
+          {{ week.workoutCount }} {{ 'statistics.sessions' | translate }}
+        </p>
+        <p class="stats__line">
+          <span class="stats__metric">{{ 'statistics.averageIntensity' | translate }}: {{ week.averageIntensity }}/10</span>
+          <span class="stats__metric">{{ 'statistics.averageTiredness' | translate }}: {{ week.averageTiredness }}/10</span>
+        </p>
+        @if (!last) {
+          <hr class="stats__separator" />
+        }
+      </section>
+    }
+  }
+</div>

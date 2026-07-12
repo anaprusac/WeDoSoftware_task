@@ -4,6 +4,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '../../../core/services/language.service';
 import { WorkoutService } from '../../../core/services/workout.service';
 import { toDateInputValue } from '../../../core/util/format';
+import { toIntlLocale } from '../../../core/util/locale';
 import { Modal } from '../../../shared/components/modal/modal';
 
 const pad = (value: number): string => String(value).padStart(2, '0');
@@ -36,12 +37,14 @@ export class CalendarModal {
   private readonly workoutDays = signal<Set<string>>(new Set());
 
   readonly monthLabel = computed(() =>
-    new Intl.DateTimeFormat(this.language.lang(), { month: 'long' }).format(new Date(this.year(), this.month() - 1, 1)),
+    new Intl.DateTimeFormat(toIntlLocale(this.language.lang()), { month: 'long' }).format(
+      new Date(this.year(), this.month() - 1, 1),
+    ),
   );
 
   readonly weekdays = computed(() => {
     // 2024-01-01 is a Monday — build Monday-first localized short names.
-    const format = new Intl.DateTimeFormat(this.language.lang(), { weekday: 'short' });
+    const format = new Intl.DateTimeFormat(toIntlLocale(this.language.lang()), { weekday: 'short' });
     return Array.from({ length: 7 }, (_, i) => format.format(new Date(2024, 0, 1 + i)));
   });
 

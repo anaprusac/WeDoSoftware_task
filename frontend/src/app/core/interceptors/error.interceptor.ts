@@ -12,11 +12,14 @@ import { ToastService } from '../services/toast.service';
  * Server/network errors surface a toast; validation errors (4xx) bubble to the calling form.
  */
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-  const auth = inject(AuthService);
   const router = inject(Router);
   const toast = inject(ToastService);
-  // Resolved lazily to avoid a circular dependency: TranslateService loads its JSON via HttpClient,
-  // which would re-enter this interceptor while TranslateService is still being constructed.
+  // Resolved lazily via Injector, not eagerly with inject(): AuthService's constructor chain reaches
+  // TranslateService (through LanguageService), and TranslateService's own translation-file fetch
+  // passes through this interceptor. Eagerly injecting AuthService here for every request — including
+  // that very first i18n fetch — would re-enter TranslateService while it is still being constructed
+  // (NG0200 circular dependency). Resolving on first actual use (inside catchError, i.e. only when an
+  // HTTP error occurs) sidesteps that entirely.
   const injector = inject(Injector);
 
   const isApi = req.url.startsWith(environment.apiUrl);
@@ -24,6 +27,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
+      const auth = injector.get(AuthService);
+
       if (error.status === 401 && isApi && !isRefresh && auth.isAuthenticated()) {
         return auth.refresh().pipe(
           switchMap(() =>

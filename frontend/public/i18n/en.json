@@ -117,6 +117,37 @@
   "detail": {
     "empty": "No workouts recorded for this day."
   },
+  "profile": {
+    "title": "Profile",
+    "username": "Username",
+    "height": "Height",
+    "weight": "Weight",
+    "gender": "Gender",
+    "bmiInfo": "Body Mass Index = weight / height². Reference ranges: below 18.5 underweight, 18.5–24.9 normal, 25–29.9 overweight, 30 and above obese.",
+    "resetPassword": "Reset password",
+    "language": "Language",
+    "darkMode": "Dark mode",
+    "saved": "Profile updated."
+  },
+  "changePassword": {
+    "title": "Reset password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "repeatNewPassword": "Repeat new password",
+    "save": "Save",
+    "success": "Your password has been changed.",
+    "currentIncorrect": "Current password is incorrect."
+  },
+  "statistics": {
+    "title": "Statistics:",
+    "weekFrom": "Week from",
+    "to": "to",
+    "totalPrefix": "Total",
+    "totalSuffix": "of working out",
+    "sessions": "workout sessions",
+    "averageIntensity": "Average intensity",
+    "averageTiredness": "Average tiredness"
+  },
   "common": {
     "loading": "Loading…",
     "cancel": "Cancel",

@@ -11,6 +11,8 @@ import {
   ResetPasswordRequest,
 } from '../models/auth.model';
 import { UserProfile } from '../models/user.model';
+import { LanguageService } from './language.service';
+import { ThemeService } from './theme.service';
 
 /**
  * Holds authentication state as signals. The access token lives only in memory (never in
@@ -19,6 +21,8 @@ import { UserProfile } from '../models/user.model';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
+  private readonly themeService = inject(ThemeService);
+  private readonly languageService = inject(LanguageService);
   private readonly baseUrl = `${environment.apiUrl}/auth`;
 
   private readonly _accessToken = signal<string | null>(null);
@@ -89,5 +93,8 @@ export class AuthService {
   private setSession(response: AuthResponse): void {
     this._accessToken.set(response.accessToken);
     this._user.set(response.user);
+    // The account's saved preferences take effect immediately, including on a fresh device.
+    this.themeService.set(response.user.themePreference === 'Dark' ? 'dark' : 'light');
+    this.languageService.useIfSupported(response.user.preferredLanguage);
   }
 }

@@ -1,0 +1,31 @@
+.switch {
+  position: relative;
+  width: 52px;
+  height: 30px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-border-strong);
+  transition: background-color var(--transition-fast);
+  flex: none;
+}
+
+.switch--on {
+  background-color: var(--color-surface-inverse);
+}
+
+.switch__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
+}
+
+.switch--on .switch__thumb {
+  transform: translateX(22px);
+  background-color: var(--color-text-inverse);
+}
