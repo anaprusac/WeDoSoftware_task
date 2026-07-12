@@ -24,6 +24,7 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
         var (status, title) = exception switch
         {
             FluentValidation.ValidationException => (StatusCodes.Status400BadRequest, "Validation failed"),
+            BadRequestException => (StatusCodes.Status400BadRequest, "Bad request"),
             NotFoundException => (StatusCodes.Status404NotFound, "Resource not found"),
             ConflictException => (StatusCodes.Status409Conflict, "Conflict"),
             UnauthorizedException => (StatusCodes.Status401Unauthorized, "Unauthorized"),
