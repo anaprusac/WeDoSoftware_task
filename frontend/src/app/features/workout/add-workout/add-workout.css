@@ -24,6 +24,24 @@
   max-width: 440px;
 }
 
+.add__type-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.add__type-row .add__type-icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  color: var(--color-accent);
+}
+
+.add__type-row .text-input {
+  flex: 1;
+  min-width: 0;
+}
+
 .add__label {
   display: inline-flex;
   align-items: center;

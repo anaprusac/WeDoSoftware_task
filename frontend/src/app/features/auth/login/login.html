@@ -1,4 +1,9 @@
 <div class="login">
+  <div class="auth-toolbar">
+    <app-theme-toggle />
+    <app-language-switcher />
+  </div>
+
   <section class="welcome">
     <h1 class="welcome__title">{{ 'auth.welcome' | translate }}</h1>
     <h2 class="welcome__subtitle">{{ 'auth.workSmarter' | translate }}</h2>
@@ -13,8 +18,8 @@
         class="text-input signin__field"
         type="text"
         formControlName="usernameOrEmail"
-        [placeholder]="'auth.username' | translate"
-        [attr.aria-label]="'auth.username' | translate"
+        [placeholder]="'auth.usernameOrEmailPlaceholder' | translate"
+        [attr.aria-label]="'auth.usernameOrEmailPlaceholder' | translate"
         autocomplete="username"
       />
       <input

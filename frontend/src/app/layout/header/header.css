@@ -38,6 +38,23 @@
   gap: var(--space-3);
 }
 
+.header__profile-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-1);
+  padding-right: var(--space-2);
+  border-radius: var(--radius-pill);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color var(--transition-fast);
+}
+
+.header__profile-link:hover {
+  background-color: color-mix(in srgb, var(--color-text-inverse) 12%, transparent);
+  text-decoration: none;
+}
+
 .header__username {
   font-weight: 600;
   font-size: var(--text-sm);

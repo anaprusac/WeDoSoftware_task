@@ -1,7 +1,7 @@
 namespace WeDoSoftware.Application.Auth;
 
-/// <summary>Initiates a password reset. The email is looked up from the username on the server.</summary>
+/// <summary>Initiates a password reset. The account is looked up by username or email on the server.</summary>
 public class ForgotPasswordRequest
 {
-    public string Username { get; set; } = string.Empty;
+    public string UsernameOrEmail { get; set; } = string.Empty;
 }

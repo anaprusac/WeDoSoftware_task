@@ -49,8 +49,8 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest request, CancellationToken cancellationToken)
     {
         await _authService.ForgotPasswordAsync(request, cancellationToken);
-        // Always the same response, to avoid revealing whether a username exists.
-        return Ok(new { message = "If an account with that username exists, a password-reset link has been sent." });
+        // Always the same response, to avoid revealing whether an account exists.
+        return Ok(new { message = "If an account with that username or email exists, a password-reset link has been sent." });
     }
 
     [HttpPost("reset-password")]

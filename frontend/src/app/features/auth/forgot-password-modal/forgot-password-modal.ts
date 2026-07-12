@@ -22,7 +22,7 @@ export class ForgotPasswordModal {
   readonly submitting = signal(false);
 
   readonly form = this.fb.nonNullable.group({
-    username: ['', [Validators.required]],
+    usernameOrEmail: ['', [Validators.required]],
   });
 
   submit(): void {

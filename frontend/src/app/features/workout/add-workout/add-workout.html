@@ -4,22 +4,45 @@
   <form class="add__form" [formGroup]="form" (ngSubmit)="save()">
     <div class="add__field add__field--type">
       <label class="add__label" for="wt-type">{{ 'workout.type' | translate }}</label>
-      <select id="wt-type" class="text-input" formControlName="type">
-        <option value="" disabled>{{ 'workout.selectType' | translate }}</option>
-        @for (option of types(); track option.value) {
-          <option [value]="option.value">{{ option.label }}</option>
+      <div class="add__type-row">
+        @if (selectedType(); as t) {
+          <app-workout-type-icon [type]="t" class="add__type-icon" />
         }
-      </select>
+        <select
+          id="wt-type"
+          class="text-input"
+          [class.text-input--invalid]="f.type.invalid && f.type.touched"
+          formControlName="type"
+        >
+          <option value="" disabled>{{ 'workout.selectType' | translate }}</option>
+          @for (option of types(); track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </div>
     </div>
 
     <div class="add__row">
       <div class="add__field">
         <label class="add__label" for="wt-date">{{ 'workout.date' | translate }}</label>
-        <input id="wt-date" class="text-input" type="date" formControlName="date" [max]="maxDate" />
+        <input
+          id="wt-date"
+          class="text-input"
+          [class.text-input--invalid]="f.date.invalid && f.date.touched"
+          type="date"
+          formControlName="date"
+          [max]="maxDate"
+        />
       </div>
       <div class="add__field">
         <label class="add__label" for="wt-time">{{ 'workout.time' | translate }}</label>
-        <input id="wt-time" class="text-input" type="time" formControlName="time" />
+        <input
+          id="wt-time"
+          class="text-input"
+          [class.text-input--invalid]="f.time.invalid && f.time.touched"
+          type="time"
+          formControlName="time"
+        />
       </div>
       <div class="add__field">
         <label class="add__label">{{ 'workout.duration' | translate }}</label>
@@ -47,7 +70,15 @@
           {{ 'workout.tiredness' | translate }} <app-info-tooltip [text]="'workout.tirednessInfo' | translate" />
         </label>
         <div class="add__inline">
-          <input class="text-input" type="number" min="1" max="10" formControlName="tiredness" />
+          <input
+            class="text-input"
+            [class.text-input--invalid]="f.tiredness.invalid && f.tiredness.touched"
+            type="number"
+            min="1"
+            max="10"
+            [placeholder]="'workout.tirednessPlaceholder' | translate"
+            formControlName="tiredness"
+          />
           <span class="add__unit">/10</span>
         </div>
       </div>

@@ -10,6 +10,9 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
+  /* Clears the modal's absolutely-positioned close (X) button, which otherwise overlaps the
+     next-month arrow sitting flush at the same top-right corner. */
+  padding-right: var(--space-6);
 }
 
 .cal__title {

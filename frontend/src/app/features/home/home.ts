@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Workout } from '../../core/models/workout.model';
 import { WorkoutService } from '../../core/services/workout.service';
@@ -15,6 +15,7 @@ import { WorkoutCard } from '../../shared/components/workout-card/workout-card';
 })
 export class Home {
   private readonly workoutService = inject(WorkoutService);
+  private readonly route = inject(ActivatedRoute);
 
   readonly workouts = signal<Workout[]>([]);
   readonly loaded = signal(false);
@@ -24,6 +25,14 @@ export class Home {
     this.workoutService.getRecent().subscribe((workouts) => {
       this.workouts.set(workouts);
       this.loaded.set(true);
+    });
+
+    // Lets the hamburger menu's "Find workout" link (?findWorkout=true) open the calendar directly,
+    // even when navigating from a route that reuses this same component instance.
+    this.route.queryParamMap.subscribe((params) => {
+      if (params.get('findWorkout')) {
+        this.calendarOpen.set(true);
+      }
     });
   }
 }

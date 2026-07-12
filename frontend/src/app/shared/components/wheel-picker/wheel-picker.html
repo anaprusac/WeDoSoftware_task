@@ -1,12 +1,13 @@
-<div class="wheel">
+<div class="wheel" [class.wheel--invalid]="outOfRange()">
   <input
     class="wheel__input"
     type="text"
     inputmode="numeric"
-    [value]="value()"
+    [value]="value() ?? ''"
+    [placeholder]="placeholder()"
     [attr.aria-label]="ariaLabel()"
+    [attr.aria-invalid]="outOfRange()"
     (input)="onInput($event)"
-    (blur)="onBlur($event)"
     (wheel)="onWheel($event)"
     (keydown)="onKeydown($event)"
   />

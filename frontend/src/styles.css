@@ -132,6 +132,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color var(--transition-base), color var(--transition-base);
+  /* App-wide default: an ordinary click anywhere (labels, buttons, cards) should never leave behind
+     a text-selection highlight that reads as "the cursor got stuck here". Form fields opt back in
+     below since their text is meant to be selectable/editable. */
+  user-select: none;
 }
 
 h1,
@@ -153,6 +157,7 @@ select,
 textarea {
   font: inherit;
   color: inherit;
+  user-select: text;
 }
 
 a {
@@ -264,10 +269,17 @@ svg {
 }
 
 .card {
+  padding: var(--space-5);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+.card:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .page-title {
@@ -323,4 +335,17 @@ svg {
 
 .auth-card .text-input::placeholder {
   color: color-mix(in srgb, var(--color-field-on-dark-text) 55%, transparent);
+}
+
+/* Theme/language toolbar shown on the unauthenticated pages (login, reset-password) — same controls
+   the authenticated header offers, so the choice can be made before signing in. */
+.auth-toolbar {
+  position: absolute;
+  top: clamp(var(--space-4), 3vw, var(--space-6));
+  right: clamp(var(--space-4), 3vw, var(--space-6));
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text);
 }

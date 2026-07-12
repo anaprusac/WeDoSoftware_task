@@ -37,7 +37,7 @@
     "forgotTitle": "Reset lozinke",
     "forgotMessage": "Ako želiš da resetuješ lozinku, unesi korisničko ime. Ako nalog postoji, uputstvo će biti poslato na imejl.",
     "reset": "Reset",
-    "resetSent": "Ako nalog sa tim korisničkim imenom postoji, link za reset je poslat na imejl.",
+    "resetSent": "Ako nalog sa tim korisničkim imenom ili imejlom postoji, link za reset je poslat na imejl.",
     "resetTitle": "Reset lozinke",
     "newPassword": "Nova lozinka",
     "repeatNewPassword": "Ponovi novu lozinku",
@@ -45,7 +45,9 @@
     "resetSuccess": "Lozinka je resetovana. Sada se možeš prijaviti.",
     "resetInvalid": "Ovaj link za reset je nevažeći ili je istekao.",
     "resetMissingToken": "Nedostaju podaci za reset. Iskoristi link iz imejla.",
-    "backToLogin": "Nazad na prijavu"
+    "backToLogin": "Nazad na prijavu",
+    "emailPlaceholder": "tvoj@imejl.com",
+    "usernameOrEmailPlaceholder": "Korisničko ime ili imejl"
   },
   "passwordRules": {
     "title": "Lozinka mora da sadrži:",
@@ -66,7 +68,8 @@
     "email": "Unesi ispravnu imejl adresu.",
     "usernameLength": "Korisničko ime mora imati 3–30 karaktera.",
     "passwordsMismatch": "Lozinke se ne poklapaju.",
-    "passwordWeak": "Lozinka ne ispunjava uslove."
+    "passwordWeak": "Lozinka ne ispunjava uslove.",
+    "outOfRange": "Mora biti između {{min}} i {{max}}."
   },
   "workoutType": {
     "Cardio": "Kardio",
@@ -94,6 +97,7 @@
     "calories": "Kalorije",
     "optional": "opciono",
     "tiredness": "Umor",
+    "tirednessPlaceholder": "1–10",
     "intensity": "Intenzitet",
     "notes": "Beleške",
     "kcal": "kcal",
@@ -119,15 +123,20 @@
   },
   "profile": {
     "title": "Profil",
+    "account": "Nalog",
     "username": "Korisničko ime",
     "height": "Visina",
     "weight": "Težina",
     "gender": "Pol",
     "bmiInfo": "Indeks telesne mase = težina / visina². Referentne vrednosti: ispod 18.5 pothranjenost, 18.5–24.9 normalna težina, 25–29.9 prekomerna težina, 30 i više gojaznost.",
     "resetPassword": "Reset lozinke",
-    "language": "Jezik",
-    "darkMode": "Tamni režim",
-    "saved": "Profil je ažuriran."
+    "bodyMetrics": "Telesne mere",
+    "thisMonth": "Ovaj mesec",
+    "viewStatistics": "Pogledaj celu statistiku",
+    "heightUpdated": "Visina je ažurirana.",
+    "weightUpdated": "Težina je ažurirana.",
+    "heightUnitUpdated": "Jedinica za visinu je promenjena.",
+    "weightUnitUpdated": "Jedinica za težinu je promenjena."
   },
   "changePassword": {
     "title": "Reset lozinke",

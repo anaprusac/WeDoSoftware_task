@@ -6,12 +6,14 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { matchValidator, passwordStrengthValidator } from '../../../core/validation/password';
+import { LanguageSwitcher } from '../../../shared/components/language-switcher/language-switcher';
 import { PasswordRules } from '../../../shared/components/password-rules/password-rules';
+import { ThemeToggle } from '../../../shared/components/theme-toggle/theme-toggle';
 
 /** Reset-password page reached from the emailed link (?email=&token=). Sets a new password. */
 @Component({
   selector: 'app-reset-password',
-  imports: [ReactiveFormsModule, TranslatePipe, RouterLink, PasswordRules],
+  imports: [ReactiveFormsModule, TranslatePipe, RouterLink, PasswordRules, ThemeToggle, LanguageSwitcher],
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.css',
 })

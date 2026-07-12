@@ -1,14 +1,22 @@
 .profile__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-8);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-5);
+  align-items: start;
   margin-top: var(--space-6);
 }
 
-.profile__column {
+.profile__card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
+}
+
+.profile__card-title {
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
 }
 
 .profile__row {
@@ -16,11 +24,6 @@
   align-items: center;
   gap: var(--space-2);
   font-size: var(--text-lg);
-}
-
-.profile__row--pref {
-  justify-content: space-between;
-  max-width: 320px;
 }
 
 .profile__label {
@@ -48,11 +51,36 @@
 
 .profile__reset {
   align-self: flex-start;
-  margin-top: var(--space-2);
+  margin-top: auto;
 }
 
-@media (max-width: 720px) {
-  .profile__grid {
-    grid-template-columns: 1fr;
-  }
+.profile__card--month {
+  justify-content: space-between;
+}
+
+.profile__metrics {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.profile__metric {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile__metric-value {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.profile__metric-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.profile__stats-link {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
 }

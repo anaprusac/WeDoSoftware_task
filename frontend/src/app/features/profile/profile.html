@@ -2,11 +2,26 @@
   <h1 class="page-title">{{ 'profile.title' | translate }}</h1>
 
   <div class="profile__grid">
-    <div class="profile__column">
+    <section class="card profile__card">
+      <h2 class="profile__card-title">{{ 'profile.account' | translate }}</h2>
       <p class="profile__row">
         <span class="profile__label">{{ 'profile.username' | translate }}:</span> {{ user()?.username }}
       </p>
+      <p class="profile__row">
+        <span class="profile__label">{{ 'auth.email' | translate }}:</span> {{ user()?.email }}
+      </p>
+      <p class="profile__row">
+        <span class="profile__label">{{ 'profile.gender' | translate }}:</span>
+        {{ ('auth.' + (user()?.gender ?? 'Male').toLowerCase()) | translate }}
+      </p>
 
+      <button type="button" class="btn btn--ghost profile__reset" (click)="changePasswordOpen.set(true)">
+        {{ 'profile.resetPassword' | translate }}
+      </button>
+    </section>
+
+    <section class="card profile__card">
+      <h2 class="profile__card-title">{{ 'profile.bodyMetrics' | translate }}</h2>
       <p class="profile__row">
         <span class="profile__label">{{ 'profile.height' | translate }}:</span>
         <input
@@ -30,29 +45,29 @@
       </p>
 
       <p class="profile__row">
-        <span class="profile__label">{{ 'profile.gender' | translate }}:</span> {{ ('auth.' + (user()?.gender ?? 'Male').toLowerCase()) | translate }}
-      </p>
-
-      <p class="profile__row">
         <app-info-tooltip [text]="'profile.bmiInfo' | translate" />
         <span class="profile__label">BMI:</span> {{ user()?.bmi ?? 0 | number: '1.2-2' }}
       </p>
+    </section>
 
-      <button type="button" class="btn profile__reset" (click)="changePasswordOpen.set(true)">
-        {{ 'profile.resetPassword' | translate }}
-      </button>
-    </div>
+    <section class="card profile__card profile__card--month">
+      <h2 class="profile__card-title">{{ 'profile.thisMonth' | translate }}</h2>
 
-    <div class="profile__column">
-      <p class="profile__row profile__row--pref">
-        <span class="profile__label">{{ 'profile.language' | translate }}:</span>
-        <app-language-switcher />
-      </p>
-      <p class="profile__row profile__row--pref">
-        <span class="profile__label">{{ 'profile.darkMode' | translate }}:</span>
-        <app-toggle-switch [checked]="isDark()" (checkedChange)="toggleDarkMode()" [ariaLabel]="'theme.toggle' | translate" />
-      </p>
-    </div>
+      @if (monthSummary(); as summary) {
+        <div class="profile__metrics">
+          <div class="profile__metric">
+            <span class="profile__metric-value">{{ summary.count }}</span>
+            <span class="profile__metric-label">{{ 'statistics.sessions' | translate }}</span>
+          </div>
+          <div class="profile__metric">
+            <span class="profile__metric-value">{{ summary.durationLabel }}</span>
+            <span class="profile__metric-label">{{ 'statistics.totalSuffix' | translate }}</span>
+          </div>
+        </div>
+      }
+
+      <a class="link-button profile__stats-link" routerLink="/statistics">{{ 'profile.viewStatistics' | translate }} →</a>
+    </section>
   </div>
 </div>
 

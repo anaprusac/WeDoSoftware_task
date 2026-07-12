@@ -1,8 +1,15 @@
-import { Component, input, model } from '@angular/core';
+import { Component, computed, input, model } from '@angular/core';
 
 /**
  * Compact numeric picker for age/height/weight. The value can be typed, changed with the mouse wheel
- * (while focused), the arrow keys, or the +/- steppers — all clamped to [min, max].
+ * (while focused), the arrow keys, or the +/- steppers.
+ *
+ * The bound value can be `null` (empty, showing `placeholder`) so a field a user hasn't actually
+ * touched never gets submitted as if it were a real, confirmed number. Typing is never silently
+ * corrected — an out-of-range value stays exactly as typed and is flagged (red border + message) so
+ * the user can fix it themselves, rather than having it quietly rewritten to the nearest bound.
+ * Only the assisted interactions (mouse wheel, +/- steppers) clamp to [min, max], since those can
+ * only ever move one step at a time and clamping there matches a native slider's behaviour.
  */
 @Component({
   selector: 'app-wheel-picker',
@@ -15,27 +22,30 @@ export class WheelPicker {
   readonly max = input.required<number>();
   readonly step = input(1);
   readonly ariaLabel = input<string>('');
-  readonly value = model.required<number>();
+  readonly placeholder = input<string>('');
+  readonly value = model.required<number | null>();
+
+  readonly outOfRange = computed(() => {
+    const v = this.value();
+    return v !== null && (v < this.min() || v > this.max());
+  });
 
   onInput(event: Event): void {
-    const parsed = parseInt((event.target as HTMLInputElement).value, 10);
-    if (!Number.isNaN(parsed)) {
-      this.value.set(parsed);
+    const raw = (event.target as HTMLInputElement).value.trim();
+    if (raw === '') {
+      this.value.set(null);
+      return;
     }
-  }
-
-  onBlur(event: Event): void {
-    const clamped = this.clamp(this.value());
-    this.value.set(clamped);
-    (event.target as HTMLInputElement).value = String(clamped);
+    const parsed = Number(raw);
+    this.value.set(Number.isNaN(parsed) ? null : parsed);
   }
 
   increment(): void {
-    this.value.set(this.clamp(this.value() + this.step()));
+    this.value.set(this.clamp(this.currentOrMin() + this.step()));
   }
 
   decrement(): void {
-    this.value.set(this.clamp(this.value() - this.step()));
+    this.value.set(this.clamp(this.currentOrMin() - this.step()));
   }
 
   onWheel(event: WheelEvent): void {
@@ -61,10 +71,12 @@ export class WheelPicker {
     }
   }
 
+  private currentOrMin(): number {
+    const v = this.value();
+    return v === null || Number.isNaN(v) ? this.min() : v;
+  }
+
   private clamp(value: number): number {
-    if (Number.isNaN(value)) {
-      return this.min();
-    }
     return Math.min(this.max(), Math.max(this.min(), value));
   }
 }

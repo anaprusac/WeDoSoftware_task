@@ -159,12 +159,13 @@ public class AuthService : IAuthService
 
     public async Task ForgotPasswordAsync(ForgotPasswordRequest request, CancellationToken cancellationToken = default)
     {
-        var user = await _userManager.FindByNameAsync(request.Username);
+        var user = await _userManager.FindByNameAsync(request.UsernameOrEmail)
+                   ?? await _userManager.FindByEmailAsync(request.UsernameOrEmail);
 
         // Respond identically whether or not the account exists, to avoid username enumeration.
         if (user is null || string.IsNullOrWhiteSpace(user.Email))
         {
-            _logger.LogInformation("Password reset requested for unknown username '{Username}'.", request.Username);
+            _logger.LogInformation("Password reset requested for unknown username/email '{UsernameOrEmail}'.", request.UsernameOrEmail);
             return;
         }
 
@@ -215,7 +216,11 @@ public class AuthService : IAuthService
 
         var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
         if (!result.Succeeded)
-            throw new UnauthorizedException(string.Join(" ", result.Errors.Select(e => e.Description)));
+            // A wrong current password is a validation failure, not an auth/session problem — throwing
+            // Unauthorized (401) here would make the client's refresh-and-retry-on-401 interceptor kick
+            // in, retry with a fresh token, get 401 again (the password is still wrong), and log the
+            // user out entirely instead of just reporting "wrong password".
+            throw new BadRequestException(string.Join(" ", result.Errors.Select(e => e.Description)));
     }
 
     public async Task<UserProfileDto> GetProfileAsync(Guid userId, CancellationToken cancellationToken = default)

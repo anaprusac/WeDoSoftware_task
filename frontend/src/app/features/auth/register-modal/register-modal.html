@@ -3,7 +3,14 @@
     <div class="register__grid">
       <label class="register__label" for="reg-email">{{ 'auth.email' | translate }}:</label>
       <div class="register__field">
-        <input id="reg-email" class="text-input" type="email" formControlName="email" autocomplete="email" />
+        <input
+          id="reg-email"
+          class="text-input"
+          type="email"
+          formControlName="email"
+          [placeholder]="'auth.emailPlaceholder' | translate"
+          autocomplete="email"
+        />
         @if (f.email.touched && f.email.invalid) {
           <p class="register__error-text">{{ 'validation.email' | translate }}</p>
         }
@@ -42,19 +49,62 @@
 
       <label class="register__label">{{ 'auth.age' | translate }}:</label>
       <div class="register__field">
-        <app-wheel-picker [min]="8" [max]="100" [value]="f.age.value" (valueChange)="setAge($event)" [ariaLabel]="'auth.age' | translate" />
+        <app-wheel-picker
+          #ageWheel
+          [min]="8"
+          [max]="100"
+          placeholder="25"
+          [value]="f.age.value"
+          (valueChange)="setAge($event)"
+          [ariaLabel]="'auth.age' | translate"
+        />
+        @if (f.age.touched && f.age.hasError('required')) {
+          <p class="register__error-text">{{ 'validation.required' | translate }}</p>
+        } @else if (ageWheel.outOfRange()) {
+          <p class="register__error-text">{{ 'validation.outOfRange' | translate: { min: 8, max: 100 } }}</p>
+        }
       </div>
 
       <label class="register__label">{{ 'auth.height' | translate }}:</label>
-      <div class="register__field register__field--measure">
-        <app-wheel-picker [min]="heightRange().min" [max]="heightRange().max" [value]="f.height.value" (valueChange)="setHeight($event)" [ariaLabel]="'auth.height' | translate" />
-        <button type="button" class="register__unit" (click)="toggleHeightUnit()">{{ 'units.' + heightUnit() | translate }}</button>
+      <div class="register__field">
+        <div class="register__field--measure">
+          <app-wheel-picker
+            #heightWheel
+            [min]="heightRange().min"
+            [max]="heightRange().max"
+            [placeholder]="heightUnit() === 'cm' ? '175' : '69'"
+            [value]="f.height.value"
+            (valueChange)="setHeight($event)"
+            [ariaLabel]="'auth.height' | translate"
+          />
+          <button type="button" class="register__unit" (click)="toggleHeightUnit()">{{ 'units.' + heightUnit() | translate }}</button>
+        </div>
+        @if (f.height.touched && f.height.hasError('required')) {
+          <p class="register__error-text">{{ 'validation.required' | translate }}</p>
+        } @else if (heightWheel.outOfRange()) {
+          <p class="register__error-text">{{ 'validation.outOfRange' | translate: { min: heightRange().min, max: heightRange().max } }}</p>
+        }
       </div>
 
       <label class="register__label">{{ 'auth.weight' | translate }}:</label>
-      <div class="register__field register__field--measure">
-        <app-wheel-picker [min]="weightRange().min" [max]="weightRange().max" [value]="f.weight.value" (valueChange)="setWeight($event)" [ariaLabel]="'auth.weight' | translate" />
-        <button type="button" class="register__unit" (click)="toggleWeightUnit()">{{ 'units.' + weightUnit() | translate }}</button>
+      <div class="register__field">
+        <div class="register__field--measure">
+          <app-wheel-picker
+            #weightWheel
+            [min]="weightRange().min"
+            [max]="weightRange().max"
+            [placeholder]="weightUnit() === 'kg' ? '75' : '165'"
+            [value]="f.weight.value"
+            (valueChange)="setWeight($event)"
+            [ariaLabel]="'auth.weight' | translate"
+          />
+          <button type="button" class="register__unit" (click)="toggleWeightUnit()">{{ 'units.' + weightUnit() | translate }}</button>
+        </div>
+        @if (f.weight.touched && f.weight.hasError('required')) {
+          <p class="register__error-text">{{ 'validation.required' | translate }}</p>
+        } @else if (weightWheel.outOfRange()) {
+          <p class="register__error-text">{{ 'validation.outOfRange' | translate: { min: weightRange().min, max: weightRange().max } }}</p>
+        }
       </div>
     </div>
 

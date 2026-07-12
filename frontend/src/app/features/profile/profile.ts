@@ -2,22 +2,21 @@ import { DecimalPipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
-import { LanguageService } from '../../core/services/language.service';
 import { ProfileService } from '../../core/services/profile.service';
-import { ThemeService } from '../../core/services/theme.service';
+import { StatisticsService } from '../../core/services/statistics.service';
 import { ToastService } from '../../core/services/toast.service';
+import { formatDuration } from '../../core/util/format';
 import { InfoTooltip } from '../../shared/components/info-tooltip/info-tooltip';
-import { LanguageSwitcher } from '../../shared/components/language-switcher/language-switcher';
-import { ToggleSwitch } from '../../shared/components/toggle-switch/toggle-switch';
 import { ChangePasswordModal } from './change-password-modal/change-password-modal';
 
-/** Profile page (frame 8): auto-saving height/weight (+ live BMI), language and dark-mode controls. */
+/** Profile page (frame 8): auto-saving height/weight (+ live BMI) and a snapshot of this month's activity. */
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule, TranslatePipe, DecimalPipe, InfoTooltip, LanguageSwitcher, ToggleSwitch, ChangePasswordModal],
+  imports: [ReactiveFormsModule, TranslatePipe, DecimalPipe, RouterLink, InfoTooltip, ChangePasswordModal],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -25,12 +24,11 @@ export class Profile {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly profileService = inject(ProfileService);
-  private readonly themeService = inject(ThemeService);
+  private readonly statisticsService = inject(StatisticsService);
   private readonly toast = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
   readonly user = this.authService.user;
-  readonly isDark = this.themeService.isDark;
   readonly changePasswordOpen = signal(false);
 
   readonly heightUnit = signal<'cm' | 'in'>('cm');
@@ -45,6 +43,13 @@ export class Profile {
   readonly heightForDisplay = computed(() => this.formValue().height);
   readonly weightForDisplay = computed(() => this.formValue().weight);
 
+  readonly monthSummary = signal<{ count: number; durationLabel: string } | null>(null);
+
+  // Tracks what was last confirmed saved so the debounced watcher below can tell which of the two
+  // fields actually changed (to fire the right one of the four distinct toasts the user asked for,
+  // instead of one blanket "profile updated").
+  private lastSaved = { height: this.initialHeight(), weight: this.initialWeight() };
+
   constructor() {
     const user = this.user();
     if (user?.preferredUnitSystem === 'Imperial') {
@@ -58,71 +63,70 @@ export class Profile {
         distinctUntilChanged((a, b) => a.height === b.height && a.weight === b.weight),
       )
       .subscribe(() => this.saveMeasurements());
-  }
 
-  toggleDarkMode(): void {
-    this.themeService.toggle();
-    this.persist({ themePreference: this.isDark() ? 'Dark' : 'Light' });
+    this.loadMonthSummary();
   }
 
   toggleHeightUnit(): void {
     const current = this.form.getRawValue().height;
-    if (this.heightUnit() === 'cm') {
-      this.heightUnit.set('in');
-      this.form.patchValue({ height: Math.round(current / 2.54) }, { emitEvent: false });
-    } else {
-      this.heightUnit.set('cm');
-      this.form.patchValue({ height: Math.round(current * 2.54) }, { emitEvent: false });
-    }
-    this.saveMeasurements();
+    const converted = this.heightUnit() === 'cm' ? Math.round(current / 2.54) : Math.round(current * 2.54);
+    this.heightUnit.set(this.heightUnit() === 'cm' ? 'in' : 'cm');
+    this.form.patchValue({ height: converted }, { emitEvent: false });
+    this.persist(['profile.heightUnitUpdated']);
   }
 
   toggleWeightUnit(): void {
     const current = this.form.getRawValue().weight;
-    if (this.weightUnit() === 'kg') {
-      this.weightUnit.set('lb');
-      this.form.patchValue({ weight: Math.round(current * 2.20462) }, { emitEvent: false });
-    } else {
-      this.weightUnit.set('kg');
-      this.form.patchValue({ weight: Math.round(current / 2.20462) }, { emitEvent: false });
-    }
-    this.saveMeasurements();
+    const converted = this.weightUnit() === 'kg' ? Math.round(current * 2.20462) : Math.round(current / 2.20462);
+    this.weightUnit.set(this.weightUnit() === 'kg' ? 'lb' : 'kg');
+    this.form.patchValue({ weight: converted }, { emitEvent: false });
+    this.persist(['profile.weightUnitUpdated']);
   }
 
   private saveMeasurements(): void {
     const value = this.form.getRawValue();
-    const heightCm = this.heightUnit() === 'cm' ? value.height : Math.round(value.height * 2.54);
-    const weightKg = this.weightUnit() === 'kg' ? value.weight : Math.round(value.weight / 2.20462);
-    this.persist({
-      heightCm,
-      weightKg,
-      preferredUnitSystem: this.heightUnit() === 'cm' ? 'Metric' : 'Imperial',
-    });
+    const toastKeys: string[] = [];
+    if (value.height !== this.lastSaved.height) toastKeys.push('profile.heightUpdated');
+    if (value.weight !== this.lastSaved.weight) toastKeys.push('profile.weightUpdated');
+    if (toastKeys.length > 0) {
+      this.persist(toastKeys);
+    }
   }
 
-  private persist(change: Partial<{
-    heightCm: number;
-    weightKg: number;
-    preferredUnitSystem: 'Metric' | 'Imperial';
-    themePreference: 'Light' | 'Dark';
-  }>): void {
+  private persist(toastKeys: string[]): void {
     const user = this.user();
     if (!user) {
       return;
     }
 
+    const value = this.form.getRawValue();
+    const heightCm = this.heightUnit() === 'cm' ? value.height : Math.round(value.height * 2.54);
+    const weightKg = this.weightUnit() === 'kg' ? value.weight : Math.round(value.weight / 2.20462);
+
     this.profileService
       .update({
-        heightCm: change.heightCm ?? user.heightCm,
-        weightKg: change.weightKg ?? user.weightKg,
+        heightCm,
+        weightKg,
         preferredLanguage: user.preferredLanguage,
-        themePreference: change.themePreference ?? user.themePreference,
-        preferredUnitSystem: change.preferredUnitSystem ?? user.preferredUnitSystem,
+        themePreference: user.themePreference,
+        preferredUnitSystem: this.heightUnit() === 'cm' ? 'Metric' : 'Imperial',
       })
       .subscribe((updated) => {
         this.authService.setUser(updated);
-        this.toast.success(this.translate.instant('profile.saved'));
+        this.lastSaved = { height: value.height, weight: value.weight };
+        for (const key of toastKeys) {
+          this.toast.success(this.translate.instant(key));
+        }
       });
+  }
+
+  private loadMonthSummary(): void {
+    const now = new Date();
+    this.statisticsService.getMonthly(now.getFullYear(), now.getMonth() + 1).subscribe((data) => {
+      const count = data.weeks.reduce((sum, week) => sum + week.workoutCount, 0);
+      const minutes = data.weeks.reduce((sum, week) => sum + week.totalDurationMinutes, 0);
+      this.monthSummary.set({ count, durationLabel: formatDuration(minutes) });
+    });
   }
 
   private initialHeight(): number {

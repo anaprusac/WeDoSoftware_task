@@ -3,13 +3,15 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../../core/services/auth.service';
+import { LanguageSwitcher } from '../../../shared/components/language-switcher/language-switcher';
+import { ThemeToggle } from '../../../shared/components/theme-toggle/theme-toggle';
 import { ForgotPasswordModal } from '../forgot-password-modal/forgot-password-modal';
 import { RegisterModal } from '../register-modal/register-modal';
 
 /** Login page (frame 1): welcome panel + sign-in card, with register/forgot popups over a dimmed page. */
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, TranslatePipe, RegisterModal, ForgotPasswordModal],
+  imports: [ReactiveFormsModule, TranslatePipe, RegisterModal, ForgotPasswordModal, ThemeToggle, LanguageSwitcher],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

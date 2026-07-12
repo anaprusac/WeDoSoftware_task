@@ -2,7 +2,10 @@
   <header class="wcard__header">{{ dateLabel() }}</header>
   <div class="wcard__body">
     <div class="wcard__top">
-      <span class="wcard__type">{{ 'workoutType.' + workout().type | translate }}</span>
+      <span class="wcard__type">
+        <app-workout-type-icon [type]="workout().type" />
+        {{ 'workoutType.' + workout().type | translate }}
+      </span>
       <span class="wcard__duration">{{ duration() }}</span>
     </div>
     <p class="wcard__metric">{{ 'workout.intensity' | translate }} {{ workout().intensity }}/10</p>

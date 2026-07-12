@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, inject, output, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Gender } from '../../../core/models/user.model';
 import { AuthService } from '../../../core/services/auth.service';
@@ -33,16 +33,27 @@ export class RegisterModal {
   readonly heightRange = computed(() => (this.heightUnit() === 'cm' ? { min: 80, max: 250 } : { min: 31, max: 98 }));
   readonly weightRange = computed(() => (this.weightUnit() === 'kg' ? { min: 35, max: 220 } : { min: 77, max: 485 }));
 
-  readonly form = this.fb.nonNullable.group(
+  // Age/height/weight start empty (not a fake-looking pre-filled default) so a value only ever
+  // reaches the server if the user actually entered one; the range hint is shown as a placeholder.
+  readonly form: FormGroup<{
+    email: FormControl<string>;
+    username: FormControl<string>;
+    password: FormControl<string>;
+    repeatPassword: FormControl<string>;
+    gender: FormControl<string>;
+    age: FormControl<number | null>;
+    height: FormControl<number | null>;
+    weight: FormControl<number | null>;
+  }> = new FormGroup(
     {
-      email: ['', [Validators.required, Validators.email]],
-      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      password: ['', [Validators.required, passwordStrengthValidator()]],
-      repeatPassword: ['', [Validators.required]],
-      gender: ['', [Validators.required]],
-      age: [25, [Validators.required, Validators.min(8), Validators.max(100)]],
-      height: [175, [Validators.required]],
-      weight: [75, [Validators.required]],
+      email: this.fb.nonNullable.control('', [Validators.required, Validators.email]),
+      username: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+      password: this.fb.nonNullable.control('', [Validators.required, passwordStrengthValidator()]),
+      repeatPassword: this.fb.nonNullable.control('', [Validators.required]),
+      gender: this.fb.nonNullable.control('', [Validators.required]),
+      age: this.fb.control<number | null>(null, [Validators.required, Validators.min(8), Validators.max(100)]),
+      height: this.fb.control<number | null>(null, [Validators.required]),
+      weight: this.fb.control<number | null>(null, [Validators.required]),
     },
     { validators: matchValidator('password', 'repeatPassword') },
   );
@@ -51,15 +62,15 @@ export class RegisterModal {
     return this.form.controls;
   }
 
-  setAge(value: number): void {
+  setAge(value: number | null): void {
     this.f.age.setValue(value);
   }
 
-  setHeight(value: number): void {
+  setHeight(value: number | null): void {
     this.f.height.setValue(value);
   }
 
-  setWeight(value: number): void {
+  setWeight(value: number | null): void {
     this.f.weight.setValue(value);
   }
 
@@ -67,10 +78,10 @@ export class RegisterModal {
     const current = this.f.height.value;
     if (this.heightUnit() === 'cm') {
       this.heightUnit.set('in');
-      this.f.height.setValue(Math.round(current / 2.54));
+      this.f.height.setValue(current === null ? null : Math.round(current / 2.54));
     } else {
       this.heightUnit.set('cm');
-      this.f.height.setValue(Math.round(current * 2.54));
+      this.f.height.setValue(current === null ? null : Math.round(current * 2.54));
     }
   }
 
@@ -78,10 +89,10 @@ export class RegisterModal {
     const current = this.f.weight.value;
     if (this.weightUnit() === 'kg') {
       this.weightUnit.set('lb');
-      this.f.weight.setValue(Math.round(current * 2.20462));
+      this.f.weight.setValue(current === null ? null : Math.round(current * 2.20462));
     } else {
       this.weightUnit.set('kg');
-      this.f.weight.setValue(Math.round(current / 2.20462));
+      this.f.weight.setValue(current === null ? null : Math.round(current / 2.20462));
     }
   }
 
@@ -95,8 +106,12 @@ export class RegisterModal {
     this.errorText.set(null);
 
     const value = this.form.getRawValue();
-    const heightCm = this.heightUnit() === 'cm' ? value.height : Math.round(value.height * 2.54);
-    const weightKg = this.weightUnit() === 'kg' ? value.weight : Math.round(value.weight / 2.20462);
+    // Guaranteed non-null past the invalid check above (Validators.required on each).
+    const age = value.age!;
+    const rawHeight = value.height!;
+    const rawWeight = value.weight!;
+    const heightCm = this.heightUnit() === 'cm' ? rawHeight : Math.round(rawHeight * 2.54);
+    const weightKg = this.weightUnit() === 'kg' ? rawWeight : Math.round(rawWeight / 2.20462);
 
     this.authService
       .register({
@@ -105,7 +120,7 @@ export class RegisterModal {
         password: value.password,
         confirmPassword: value.repeatPassword,
         gender: value.gender as Gender,
-        age: value.age,
+        age,
         heightCm,
         weightKg,
         preferredUnitSystem: this.heightUnit() === 'cm' ? 'Metric' : 'Imperial',

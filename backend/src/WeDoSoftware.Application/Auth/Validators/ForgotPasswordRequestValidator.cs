@@ -6,6 +6,6 @@ public class ForgotPasswordRequestValidator : AbstractValidator<ForgotPasswordRe
 {
     public ForgotPasswordRequestValidator()
     {
-        RuleFor(x => x.Username).NotEmpty().WithMessage("Username is required.");
+        RuleFor(x => x.UsernameOrEmail).NotEmpty().WithMessage("Username or email is required.");
     }
 }

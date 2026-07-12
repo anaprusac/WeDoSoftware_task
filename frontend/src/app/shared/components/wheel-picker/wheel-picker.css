@@ -7,10 +7,19 @@
   border-radius: var(--radius-pill);
   padding-left: var(--space-3);
   overflow: hidden;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .wheel:focus-within {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-focus) 22%, transparent);
+}
+
+.wheel--invalid {
+  border-color: var(--color-danger);
+}
+
+.wheel--invalid:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 22%, transparent);
 }
 
 .wheel__input {
@@ -25,6 +34,10 @@
 
 .wheel__input:focus {
   outline: none;
+}
+
+.wheel__input::placeholder {
+  color: color-mix(in srgb, var(--field-text, var(--color-text)) 45%, transparent);
 }
 
 .wheel__steppers {

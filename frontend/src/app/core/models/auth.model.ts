@@ -24,7 +24,7 @@ export interface RegisterRequest {
 }
 
 export interface ForgotPasswordRequest {
-  username: string;
+  usernameOrEmail: string;
 }
 
 export interface ResetPasswordRequest {

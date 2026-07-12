@@ -18,21 +18,28 @@
   @if (!loaded()) {
     <p class="loading-text">{{ 'common.loading' | translate }}</p>
   } @else if (data()) {
-    @for (week of data()!.weeks; track week.weekStart; let last = $last) {
-      <section class="stats__week">
-        <h2 class="stats__week-title">{{ weekRangeLabel(week.weekStart, week.weekEnd) }}</h2>
-        <p class="stats__line">
-          {{ 'statistics.totalPrefix' | translate }} {{ duration(week.totalDurationMinutes) }} {{ 'statistics.totalSuffix' | translate }},
-          {{ week.workoutCount }} {{ 'statistics.sessions' | translate }}
-        </p>
-        <p class="stats__line">
-          <span class="stats__metric">{{ 'statistics.averageIntensity' | translate }}: {{ week.averageIntensity }}/10</span>
-          <span class="stats__metric">{{ 'statistics.averageTiredness' | translate }}: {{ week.averageTiredness }}/10</span>
-        </p>
-        @if (!last) {
-          <hr class="stats__separator" />
-        }
-      </section>
-    }
+    <div class="stats__grid">
+      @for (week of data()!.weeks; track week.weekStart) {
+        <article class="card stats__card">
+          <div class="stats__summary">
+            <h2 class="stats__week-title">{{ weekRangeLabel(week.weekStart, week.weekEnd) }}</h2>
+            <p class="stats__total">
+              {{ 'statistics.totalPrefix' | translate }} <strong>{{ duration(week.totalDurationMinutes) }}</strong>
+              {{ 'statistics.totalSuffix' | translate }} · <strong>{{ week.workoutCount }}</strong> {{ 'statistics.sessions' | translate }}
+            </p>
+          </div>
+          <div class="stats__metrics">
+            <div class="stats__metric">
+              <span class="stats__metric-value">{{ week.averageIntensity }}<span class="stats__metric-scale">/10</span></span>
+              <span class="stats__metric-label">{{ 'statistics.averageIntensity' | translate }}</span>
+            </div>
+            <div class="stats__metric">
+              <span class="stats__metric-value">{{ week.averageTiredness }}<span class="stats__metric-scale">/10</span></span>
+              <span class="stats__metric-label">{{ 'statistics.averageTiredness' | translate }}</span>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
   }
 </div>

@@ -10,13 +10,14 @@ import { ConfirmService } from '../../../core/services/confirm.service';
 import { LanguageService } from '../../../core/services/language.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { WorkoutService } from '../../../core/services/workout.service';
-import { toDateInputValue, toTimeInputValue } from '../../../core/util/format';
+import { toDateInputValue } from '../../../core/util/format';
 import { InfoTooltip } from '../../../shared/components/info-tooltip/info-tooltip';
+import { WorkoutTypeIcon } from '../../../shared/components/workout-type-icon/workout-type-icon';
 
 /** Add-workout form (frame 5): live intensity, no-future restriction, confirm dialogs for cancel/save. */
 @Component({
   selector: 'app-add-workout',
-  imports: [ReactiveFormsModule, TranslatePipe, InfoTooltip],
+  imports: [ReactiveFormsModule, TranslatePipe, InfoTooltip, WorkoutTypeIcon],
   templateUrl: './add-workout.html',
   styleUrl: './add-workout.css',
 })
@@ -37,13 +38,19 @@ export class AddWorkout {
   readonly form = this.fb.nonNullable.group({
     type: ['', Validators.required],
     date: [toDateInputValue(this.now), Validators.required],
-    time: [toTimeInputValue(this.now), Validators.required],
+    // Date reasonably defaults to today (it's genuinely "now"), but time and tiredness start empty
+    // (placeholder-only) rather than pre-filled with a value the user never actually confirmed.
+    time: ['', Validators.required],
     hours: [0],
     minutes: [30],
     calories: [null as number | null],
-    tiredness: [5, [Validators.required, Validators.min(1), Validators.max(10)]],
+    tiredness: [null as number | null, [Validators.required, Validators.min(1), Validators.max(10)]],
     notes: [''],
   });
+
+  get f() {
+    return this.form.controls;
+  }
 
   private readonly formValue = toSignal(this.form.valueChanges, { initialValue: this.form.getRawValue() });
 
@@ -60,6 +67,12 @@ export class AddWorkout {
       return null;
     }
     return calculateIntensity(value.type as WorkoutType, this.durationMinutes(), gender);
+  });
+
+  /** Live preview icon next to the type select, reflecting whatever is currently chosen. */
+  readonly selectedType = computed(() => {
+    const type = this.formValue().type;
+    return type ? (type as WorkoutType) : null;
   });
 
   /** Workout types sorted by their localized label. */
@@ -113,7 +126,7 @@ export class AddWorkout {
         performedAt,
         durationMinutes: this.durationMinutes(),
         calories: value.calories ?? null,
-        tiredness: value.tiredness,
+        tiredness: value.tiredness!, // guaranteed non-null: Validators.required passed the invalid check above
         notes: value.notes.trim() || null,
       })
       .subscribe({

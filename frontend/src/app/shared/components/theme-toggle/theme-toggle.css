@@ -7,10 +7,12 @@
   border: none;
   border-radius: var(--radius-pill);
   background-color: transparent;
-  color: var(--color-text-inverse);
+  /* Inherits from whatever surface it's placed on (text-inverse on the dark header bar, normal
+     text colour when placed on a light page like login) instead of assuming a dark background. */
+  color: inherit;
   transition: background-color var(--transition-fast);
 }
 
 .theme-toggle:hover {
-  background-color: color-mix(in srgb, var(--color-text-inverse) 15%, transparent);
+  background-color: color-mix(in srgb, currentColor 15%, transparent);
 }

@@ -37,7 +37,7 @@
     "forgotTitle": "Reset password",
     "forgotMessage": "If you wish to reset your password, type your username. If your profile exists, instructions will be sent to your email.",
     "reset": "Reset",
-    "resetSent": "If an account with that username exists, a reset link has been sent to its email.",
+    "resetSent": "If an account with that username or email exists, a reset link has been sent to its email.",
     "resetTitle": "Reset password",
     "newPassword": "New password",
     "repeatNewPassword": "Repeat new password",
@@ -45,7 +45,9 @@
     "resetSuccess": "Your password has been reset. You can now sign in.",
     "resetInvalid": "This reset link is invalid or has expired.",
     "resetMissingToken": "Missing reset information. Please use the link from your email.",
-    "backToLogin": "Back to sign in"
+    "backToLogin": "Back to sign in",
+    "emailPlaceholder": "you@example.com",
+    "usernameOrEmailPlaceholder": "Username or email"
   },
   "passwordRules": {
     "title": "Password must contain:",
@@ -66,7 +68,8 @@
     "email": "Enter a valid email address.",
     "usernameLength": "Username must be 3–30 characters.",
     "passwordsMismatch": "Passwords do not match.",
-    "passwordWeak": "Password does not meet the requirements."
+    "passwordWeak": "Password does not meet the requirements.",
+    "outOfRange": "Must be between {{min}} and {{max}}."
   },
   "workoutType": {
     "Cardio": "Cardio",
@@ -94,6 +97,7 @@
     "calories": "Calories",
     "optional": "optional",
     "tiredness": "Tiredness",
+    "tirednessPlaceholder": "1–10",
     "intensity": "Intensity",
     "notes": "Notes",
     "kcal": "kcal",
@@ -119,15 +123,20 @@
   },
   "profile": {
     "title": "Profile",
+    "account": "Account",
     "username": "Username",
     "height": "Height",
     "weight": "Weight",
     "gender": "Gender",
     "bmiInfo": "Body Mass Index = weight / height². Reference ranges: below 18.5 underweight, 18.5–24.9 normal, 25–29.9 overweight, 30 and above obese.",
     "resetPassword": "Reset password",
-    "language": "Language",
-    "darkMode": "Dark mode",
-    "saved": "Profile updated."
+    "bodyMetrics": "Body metrics",
+    "thisMonth": "This month",
+    "viewStatistics": "View full statistics",
+    "heightUpdated": "Height updated.",
+    "weightUpdated": "Weight updated.",
+    "heightUnitUpdated": "Height unit updated.",
+    "weightUnitUpdated": "Weight unit updated."
   },
   "changePassword": {
     "title": "Reset password",

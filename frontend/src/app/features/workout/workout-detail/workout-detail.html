@@ -4,24 +4,39 @@
   @if (!loaded()) {
     <p class="loading-text">{{ 'common.loading' | translate }}</p>
   } @else {
-    @for (workout of workouts(); track workout.id; let last = $last) {
-      <section class="detail__item">
-        <h2 class="detail__time">{{ time(workout) }}</h2>
-        <p class="detail__row"><span class="detail__label">{{ 'workout.type' | translate }}:</span> {{ 'workoutType.' + workout.type | translate }}</p>
-        <p class="detail__row"><span class="detail__label">{{ 'workout.duration' | translate }}:</span> {{ duration(workout) }}</p>
-        <p class="detail__row"><span class="detail__label">{{ 'workout.intensity' | translate }}:</span> {{ workout.intensity }}/10</p>
-        <p class="detail__row"><span class="detail__label">{{ 'workout.tiredness' | translate }}:</span> {{ workout.tiredness }}/10</p>
-        @if (workout.calories !== null) {
-          <p class="detail__row"><span class="detail__label">{{ 'workout.caloriesBurned' | translate }}:</span> {{ workout.calories }} {{ 'workout.kcal' | translate }}</p>
-        }
-        @if (workout.notes) {
-          <p class="detail__row"><span class="detail__label">{{ 'workout.notes' | translate }}:</span> {{ workout.notes }}</p>
-        }
-        @if (!last) {
-          <hr class="detail__separator" />
-        }
-      </section>
-    }
+    <div class="detail__list">
+      @for (workout of workouts(); track workout.id) {
+        <article class="card detail__card">
+          <h2 class="detail__time">{{ time(workout) }}</h2>
+          <div class="detail__grid">
+            <span class="detail__label">{{ 'workout.type' | translate }}</span>
+            <span class="detail__value detail__value--type">
+              <app-workout-type-icon [type]="workout.type" />
+              {{ 'workoutType.' + workout.type | translate }}
+            </span>
+
+            <span class="detail__label">{{ 'workout.duration' | translate }}</span>
+            <span class="detail__value">{{ duration(workout) }}</span>
+
+            <span class="detail__label">{{ 'workout.intensity' | translate }}</span>
+            <span class="detail__value">{{ workout.intensity }}/10</span>
+
+            <span class="detail__label">{{ 'workout.tiredness' | translate }}</span>
+            <span class="detail__value">{{ workout.tiredness }}/10</span>
+
+            @if (workout.calories !== null) {
+              <span class="detail__label">{{ 'workout.caloriesBurned' | translate }}</span>
+              <span class="detail__value">{{ workout.calories }} {{ 'workout.kcal' | translate }}</span>
+            }
+
+            @if (workout.notes) {
+              <span class="detail__label">{{ 'workout.notes' | translate }}</span>
+              <span class="detail__value">{{ workout.notes }}</span>
+            }
+          </div>
+        </article>
+      }
+    </div>
 
     @if (workouts().length === 0) {
       <p class="detail__empty">{{ 'detail.empty' | translate }}</p>

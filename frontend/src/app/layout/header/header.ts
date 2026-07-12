@@ -1,4 +1,5 @@
 import { Component, inject, output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { LanguageSwitcher } from '../../shared/components/language-switcher/language-switcher';
 import { ThemeToggle } from '../../shared/components/theme-toggle/theme-toggle';
@@ -6,7 +7,7 @@ import { ThemeToggle } from '../../shared/components/theme-toggle/theme-toggle';
 /** App header shown on every authenticated page. Identical across screens. */
 @Component({
   selector: 'app-header',
-  imports: [ThemeToggle, LanguageSwitcher],
+  imports: [ThemeToggle, LanguageSwitcher, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })

@@ -4,11 +4,12 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Workout } from '../../../core/models/workout.model';
 import { WorkoutService } from '../../../core/services/workout.service';
 import { formatClockFromIso, formatDateOnly, formatDuration } from '../../../core/util/format';
+import { WorkoutTypeIcon } from '../../../shared/components/workout-type-icon/workout-type-icon';
 
 /** Workout detail by date (frame 9): every workout on the selected day, in chronological order. */
 @Component({
   selector: 'app-workout-detail',
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, WorkoutTypeIcon],
   templateUrl: './workout-detail.html',
   styleUrl: './workout-detail.css',
 })
