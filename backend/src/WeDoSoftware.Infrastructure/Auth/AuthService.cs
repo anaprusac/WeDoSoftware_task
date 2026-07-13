@@ -204,7 +204,7 @@ public class AuthService : IAuthService
         if (!result.Succeeded)
             throw new UnauthorizedException("Invalid or expired reset token.");
 
-        // A reset may indicate a compromised account — invalidate all existing sessions.
+        // A reset may indicate a compromised account, invalidate all existing sessions.
         await RevokeAllForUserAsync(user.Id, cancellationToken);
     }
 
@@ -216,7 +216,7 @@ public class AuthService : IAuthService
 
         var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
         if (!result.Succeeded)
-            // A wrong current password is a validation failure, not an auth/session problem — throwing
+            // A wrong current password is a validation failure, not an auth/session problem, throwing
             // Unauthorized (401) here would make the client's refresh-and-retry-on-401 interceptor kick
             // in, retry with a fresh token, get 401 again (the password is still wrong), and log the
             // user out entirely instead of just reporting "wrong password".

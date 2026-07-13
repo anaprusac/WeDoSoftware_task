@@ -18,7 +18,7 @@ const BASE_POINTS: Record<WorkoutType, number> = {
   Other: 5,
 };
 
-/** Stable list of workout types (ordering here is irrelevant — the UI sorts by localized label). */
+/** Stable list of workout types (ordering here is irrelevant, the UI sorts by localized label). */
 export const WORKOUT_TYPES = Object.keys(BASE_POINTS) as WorkoutType[];
 
 export function durationModifier(minutes: number): number {

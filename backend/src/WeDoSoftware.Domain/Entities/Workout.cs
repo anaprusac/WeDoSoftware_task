@@ -5,7 +5,7 @@ namespace WeDoSoftware.Domain.Entities;
 /// <summary>
 /// A single completed workout session logged by a user.
 /// <see cref="Intensity"/> is always computed on the server from
-/// <see cref="Type"/>, <see cref="DurationMinutes"/> and the user's gender — it is never
+/// <see cref="Type"/>, <see cref="DurationMinutes"/> and the user's gender, it is never
 /// trusted from the client.
 /// </summary>
 public class Workout

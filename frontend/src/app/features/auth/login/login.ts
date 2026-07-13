@@ -24,6 +24,7 @@ export class Login {
   readonly errorKey = signal<string | null>(null);
   readonly showRegister = signal(false);
   readonly showForgot = signal(false);
+  readonly showPassword = signal(false);
 
   readonly form = this.fb.nonNullable.group({
     usernameOrEmail: ['', Validators.required],
@@ -63,5 +64,9 @@ export class Login {
   onRegistered(): void {
     this.showRegister.set(false);
     this.router.navigate(['/home']);
+  }
+
+  toggleShowPassword(): void {
+    this.showPassword.set(!this.showPassword());
   }
 }

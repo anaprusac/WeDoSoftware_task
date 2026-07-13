@@ -35,7 +35,7 @@ public class StatisticsService : IStatisticsService
 
         var weekly = WeeklyStatisticsCalculator.Build(year, month, workouts);
 
-        // For the current month, don't report on weeks that haven't started yet — showing an
+        // For the current month, don't report on weeks that haven't started yet, showing an
         // all-zero week for "next week" reads as if data is missing rather than simply not existing.
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
         if (year == today.Year && month == today.Month)

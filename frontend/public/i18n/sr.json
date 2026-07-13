@@ -88,7 +88,7 @@
   "home": {
     "addWorkout": "Dodaj trening",
     "findWorkout": "Pronađi trening po datumu",
-    "noWorkouts": "Još nema treninga — dodaj prvi!"
+    "noWorkouts": "Još nema treninga, dodaj prvi!"
   },
   "workout": {
     "addTitle": "Dodaj trening",

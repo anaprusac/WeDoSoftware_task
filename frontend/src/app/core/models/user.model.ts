@@ -15,7 +15,7 @@ export interface UserProfile {
   preferredUnitSystem: UnitSystem;
 }
 
-/** Full-replace payload for PUT /api/profile — the server always expects every field. */
+/** Full-replace payload for PUT /api/profile, the server always expects every field. */
 export interface UpdateProfileRequest {
   heightCm: number;
   weightKg: number;

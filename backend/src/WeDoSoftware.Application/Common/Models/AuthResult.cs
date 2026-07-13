@@ -4,7 +4,7 @@ namespace WeDoSoftware.Application.Common.Models;
 
 /// <summary>
 /// Result of a successful authentication. The raw refresh token is returned to the API layer only so
-/// it can be placed in an http-only cookie — it is never serialized into the response body.
+/// it can be placed in an http-only cookie, it is never serialized into the response body.
 /// </summary>
 public class AuthResult
 {

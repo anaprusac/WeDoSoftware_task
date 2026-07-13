@@ -43,7 +43,7 @@ export class Statistics {
     return Array.from({ length: maxMonth }, (_, i) => ({ value: i + 1, label: format.format(new Date(2024, i, 1)) }));
   });
 
-  /** Matches the year select's range — paging further back than that would land somewhere the
+  /** Matches the year select's range, paging further back than that would land somewhere the
    * dropdown itself can't reach. */
   readonly canGoPrev = computed(() => this.year() > this.currentYear - YEARS_BACK);
   readonly canGoNext = computed(

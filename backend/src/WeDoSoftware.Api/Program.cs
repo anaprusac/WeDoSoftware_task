@@ -47,7 +47,7 @@ builder.Services.AddAuthorization();
 builder.Services
     .AddControllers(options => options.Filters.Add<FluentValidationFilter>())
     .AddJsonOptions(options =>
-        // Serialize/accept enums as their names (e.g. "Female", "Cardio") — cleaner API, matches DB storage.
+        // Serialize/accept enums as their names (e.g. "Female", "Cardio"), cleaner API, matches DB storage.
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 // --- Swagger with JWT support ---

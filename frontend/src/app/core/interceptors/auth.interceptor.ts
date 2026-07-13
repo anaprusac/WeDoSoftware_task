@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../services/auth.service';
 
-// Endpoints that establish or refresh a session — they must NOT carry a (possibly stale) bearer token.
+// Endpoints that establish or refresh a session, they must NOT carry a (possibly stale) bearer token.
 const SESSION_ENDPOINTS = /\/auth\/(login|register|refresh|forgot-password|reset-password)$/;
 
 /** Adds credentials (for the refresh cookie) and the bearer token to API requests. */

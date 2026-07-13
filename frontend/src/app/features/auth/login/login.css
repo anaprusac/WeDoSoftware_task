@@ -5,7 +5,7 @@
   grid-template-columns: 2fr 1fr;
   align-items: center;
   gap: var(--space-8);
-  /* Caps how far apart the welcome text and sign-in card can drift on very wide screens — without
+  /* Caps how far apart the welcome text and sign-in card can drift on very wide screens, without
      this the 2fr/1fr split leaves a large, unintentional-looking empty gap between them. */
   max-width: 1280px;
   margin: 0 auto;
@@ -77,7 +77,7 @@
   box-shadow: var(--shadow-lg);
   /* No `forwards` here (unlike .welcome__*): a forwards-filled animation keeps permanently owning
      `transform` even after it finishes, which silently blocks the :hover rule below from ever
-     applying — .signin has no non-animated base value for transform/opacity, so once the entrance
+     applying, .signin has no non-animated base value for transform/opacity, so once the entrance
      animation ends it reverts to the same defaults `forwards` would have kept anyway, and :hover
      regains control of transform. */
   animation: welcome-in 700ms ease-out;
@@ -106,6 +106,38 @@
 .signin__field {
   text-align: center;
   font-weight: 600;
+}
+
+.signin__password-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.signin__password-group .text-input {
+  padding-right: var(--space-12);
+}
+
+.signin__password-toggle {
+  position: absolute;
+  right: var(--space-3);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  transition: color var(--transition-base);
+}
+
+.signin__password-toggle:hover {
+  color: var(--color-text);
+}
+
+.signin__password-icon {
+  display: block;
 }
 
 .signin__error {

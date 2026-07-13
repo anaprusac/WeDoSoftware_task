@@ -28,7 +28,7 @@ public class SmtpEmailSender : IEmailSender
         if (!_options.IsConfigured)
         {
             _logger.LogWarning(
-                "SMTP is not configured — email to {Recipient} not sent. Subject: {Subject}\nBody:\n{Body}",
+                "SMTP is not configured, email to {Recipient} not sent. Subject: {Subject}\nBody:\n{Body}",
                 toEmail, subject, htmlBody);
             return;
         }

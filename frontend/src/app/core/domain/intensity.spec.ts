@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { calculateIntensity, durationModifier, genderModifier, WORKOUT_TYPES } from './intensity';
 
-// Mirrors WeDoSoftware.Tests/Domain/IntensityCalculatorTests.cs — this is only a client-side
+// Mirrors WeDoSoftware.Tests/Domain/IntensityCalculatorTests.cs, this is only a client-side
 // preview of the server's authoritative formula, so the two must stay in lockstep.
 describe('intensity', () => {
   it('lists all nine workout types', () => {

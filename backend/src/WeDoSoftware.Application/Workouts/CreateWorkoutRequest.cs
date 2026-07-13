@@ -3,7 +3,7 @@ using WeDoSoftware.Domain.Enums;
 namespace WeDoSoftware.Application.Workouts;
 
 /// <summary>
-/// Payload for logging a completed workout. Intensity is deliberately absent — the server computes it
+/// Payload for logging a completed workout. Intensity is deliberately absent, the server computes it
 /// from the type, duration and the user's gender, so it can never be spoofed by the client.
 /// </summary>
 public class CreateWorkoutRequest

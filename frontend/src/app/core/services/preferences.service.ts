@@ -24,7 +24,7 @@ export class PreferencesService {
   private persist(change: { themePreference?: ThemePreference; preferredLanguage?: string }): void {
     const user = this.authService.user();
     if (!user) {
-      return; // Not logged in — the client-side preference (localStorage) is enough.
+      return; // Not logged in, the client-side preference (localStorage) is enough.
     }
 
     this.profileService

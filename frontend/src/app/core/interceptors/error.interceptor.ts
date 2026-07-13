@@ -16,8 +16,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const toast = inject(ToastService);
   // Resolved lazily via Injector, not eagerly with inject(): AuthService's constructor chain reaches
   // TranslateService (through LanguageService), and TranslateService's own translation-file fetch
-  // passes through this interceptor. Eagerly injecting AuthService here for every request — including
-  // that very first i18n fetch — would re-enter TranslateService while it is still being constructed
+  // passes through this interceptor. Eagerly injecting AuthService here for every request, including
+  // that very first i18n fetch, would re-enter TranslateService while it is still being constructed
   // (NG0200 circular dependency). Resolving on first actual use (inside catchError, i.e. only when an
   // HTTP error occurs) sidesteps that entirely.
   const injector = inject(Injector);

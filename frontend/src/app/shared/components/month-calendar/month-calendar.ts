@@ -15,7 +15,7 @@ interface Cell {
 
 /**
  * Monday-first month grid shared by Statistics (one instance per week, with that week's range
- * highlighted) and Profile (one instance for the whole month) — kept as a single component so the
+ * highlighted) and Profile (one instance for the whole month), kept as a single component so the
  * two stay visually identical instead of drifting apart as hand-matched copies.
  */
 @Component({
@@ -29,7 +29,7 @@ export class MonthCalendar {
 
   readonly year = input.required<number>();
   readonly month = input.required<number>();
-  /** Dates ("yyyy-MM-dd") that have a recorded workout — rendered emphasized and clickable. */
+  /** Dates ("yyyy-MM-dd") that have a recorded workout, rendered emphasized and clickable. */
   readonly workoutDays = input<ReadonlySet<string>>(new Set());
   /** Optional inclusive date range to give a subtle background wash (e.g. "this week" in Statistics). */
   readonly highlightStart = input<string | null>(null);
@@ -42,7 +42,7 @@ export class MonthCalendar {
 
   readonly weekdayLabels = computed(() => {
     const format = new Intl.DateTimeFormat(toIntlLocale(this.language.lang()), { weekday: 'narrow' });
-    // 2024-01-01 is a Monday — build Monday-first localized single-letter names.
+    // 2024-01-01 is a Monday, build Monday-first localized single-letter names.
     return Array.from({ length: 7 }, (_, i) => format.format(new Date(2024, 0, 1 + i)));
   });
 

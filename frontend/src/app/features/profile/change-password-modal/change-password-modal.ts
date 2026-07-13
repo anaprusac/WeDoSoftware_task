@@ -8,7 +8,7 @@ import { matchValidator, passwordStrengthValidator } from '../../../core/validat
 import { Modal } from '../../../shared/components/modal/modal';
 import { PasswordRules } from '../../../shared/components/password-rules/password-rules';
 
-/** "Reset password" popup on the profile page (frame 11) — requires the current password. */
+/** "Reset password" popup on the profile page (frame 11), requires the current password. */
 @Component({
   selector: 'app-change-password-modal',
   imports: [ReactiveFormsModule, TranslatePipe, Modal, PasswordRules],

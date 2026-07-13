@@ -1,7 +1,7 @@
 namespace WeDoSoftware.Application.Auth;
 
 /// <summary>
-/// Response body for successful auth. The refresh token is intentionally absent — it is delivered as an
+/// Response body for successful auth. The refresh token is intentionally absent, it is delivered as an
 /// http-only cookie so it is never reachable from JavaScript.
 /// </summary>
 public class AuthResponse

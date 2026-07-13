@@ -52,7 +52,7 @@ export class CalendarModal {
   });
 
   readonly weekdays = computed(() => {
-    // 2024-01-01 is a Monday — build Monday-first localized short names.
+    // 2024-01-01 is a Monday, build Monday-first localized short names.
     const format = new Intl.DateTimeFormat(toIntlLocale(this.language.lang()), { weekday: 'short' });
     return Array.from({ length: 7 }, (_, i) => format.format(new Date(2024, 0, 1 + i)));
   });

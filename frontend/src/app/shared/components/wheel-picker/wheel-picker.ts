@@ -6,7 +6,7 @@ import { Component, computed, input, model } from '@angular/core';
  *
  * The bound value can be `null` (empty, showing `placeholder`) so a field a user hasn't actually
  * touched never gets submitted as if it were a real, confirmed number. Typing is never silently
- * corrected — an out-of-range value stays exactly as typed and is flagged (red border + message) so
+ * corrected, an out-of-range value stays exactly as typed and is flagged (red border + message) so
  * the user can fix it themselves, rather than having it quietly rewritten to the nearest bound.
  * Only the assisted interactions (mouse wheel, +/- steppers) clamp to [min, max], since those can
  * only ever move one step at a time and clamping there matches a native slider's behaviour.

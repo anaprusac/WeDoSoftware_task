@@ -1,5 +1,5 @@
 /* Fixed to the viewport edge, sized/offset to sit within the page's own content padding (32px on
-   desktop) rather than requiring true empty margin beyond the 1280px content column — that margin
+   desktop) rather than requiring true empty margin beyond the 1280px content column, that margin
    only exists on very wide monitors, so anchoring to it made the buttons invisible on ordinary
    1366-1440px laptop screens. */
 .stats__page-nav {
@@ -67,7 +67,7 @@
   text-transform: capitalize;
 }
 
-/* One wide card per week, stacked — a month can have 4 or 5 weeks, and a wrapping grid left an
+/* One wide card per week, stacked, a month can have 4 or 5 weeks, and a wrapping grid left an
    orphan card alone in its own row whenever there were 5. Full-width rows sidestep that entirely. */
 .stats__grid {
   display: flex;

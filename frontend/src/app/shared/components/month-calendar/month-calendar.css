@@ -46,7 +46,7 @@
   cursor: default;
 }
 
-/* Belongs to the week being called out on this card — a subtle wash, layered under the stronger
+/* Belongs to the week being called out on this card, a subtle wash, layered under the stronger
    "workout happened" state below. */
 .mcal__day--range {
   background-color: color-mix(in srgb, var(--color-accent) 20%, var(--color-surface-2));

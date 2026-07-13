@@ -16,7 +16,7 @@
   gap: var(--space-4);
 }
 
-/* Arriving here from a specific workout's magnifier on the home dashboard — draw the eye straight
+/* Arriving here from a specific workout's magnifier on the home dashboard, draw the eye straight
    to that one card instead of leaving the user to scan the whole day's list for it. */
 .detail__card--highlight {
   border-color: var(--color-accent);

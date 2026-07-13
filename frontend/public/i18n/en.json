@@ -88,7 +88,7 @@
   "home": {
     "addWorkout": "Add workout",
     "findWorkout": "Find workout by the date",
-    "noWorkouts": "No workouts yet — add your first one!"
+    "noWorkouts": "No workouts yet, add your first one!"
   },
   "workout": {
     "addTitle": "Add workout",

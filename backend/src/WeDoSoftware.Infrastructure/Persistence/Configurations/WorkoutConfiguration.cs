@@ -20,7 +20,7 @@ public class WorkoutConfiguration : IEntityTypeConfiguration<Workout>
 
         builder.Property(w => w.Notes).HasMaxLength(1000);
 
-        // No navigation property on the domain entity — it stays framework-free. The relationship
+        // No navigation property on the domain entity, it stays framework-free. The relationship
         // to the Identity user is configured here via the shadow principal.
         builder.HasOne<AppUser>()
             .WithMany()
