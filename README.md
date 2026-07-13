@@ -6,6 +6,8 @@ Full-stack app for logging workouts and tracking progress: auth, workout logging
 
 ![Home page](docs/assets/home_page_ss.png)
 
+[Download demo video](https://limewire.com/d/UxMJe#709FO5ijNA) (downloads the video file to your computer)
+
 ## Design
 
 The UI and app architecture were designed in Figma first, then implemented.
