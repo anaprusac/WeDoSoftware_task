@@ -47,7 +47,10 @@
     "resetMissingToken": "Missing reset information. Please use the link from your email.",
     "backToLogin": "Back to sign in",
     "emailPlaceholder": "you@example.com",
-    "usernameOrEmailPlaceholder": "Username or email"
+    "usernameOrEmailPlaceholder": "Username or email",
+    "next": "Next",
+    "back": "Back",
+    "stepOf": "Step {{current}} of {{total}}"
   },
   "passwordRules": {
     "title": "Password must contain:",

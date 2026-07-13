@@ -1,117 +1,128 @@
 <app-modal variant="auth" [title]="'auth.registerTitle' | translate" (close)="close.emit()">
+  <p class="register__step-indicator">{{ 'auth.stepOf' | translate: { current: step(), total: 2 } }}</p>
+
   <form class="register" [formGroup]="form" (ngSubmit)="submit()">
-    <div class="register__grid">
-      <label class="register__label" for="reg-email">{{ 'auth.email' | translate }}:</label>
-      <div class="register__field">
-        <input
-          id="reg-email"
-          class="text-input"
-          type="email"
-          formControlName="email"
-          [placeholder]="'auth.emailPlaceholder' | translate"
-          autocomplete="email"
-        />
-        @if (f.email.touched && f.email.invalid) {
-          <p class="register__error-text">{{ 'validation.email' | translate }}</p>
-        }
-      </div>
-
-      <label class="register__label" for="reg-username">{{ 'auth.username' | translate }}:</label>
-      <div class="register__field">
-        <input id="reg-username" class="text-input" type="text" formControlName="username" autocomplete="username" />
-        @if (f.username.touched && f.username.invalid) {
-          <p class="register__error-text">{{ 'validation.usernameLength' | translate }}</p>
-        }
-      </div>
-
-      <label class="register__label" for="reg-password">{{ 'auth.password' | translate }}:</label>
-      <div class="register__field">
-        <input id="reg-password" class="text-input" type="password" formControlName="password" autocomplete="new-password" />
-        <app-password-rules [value]="f.password.value" />
-      </div>
-
-      <label class="register__label" for="reg-repeat">{{ 'auth.repeatPassword' | translate }}:</label>
-      <div class="register__field">
-        <input id="reg-repeat" class="text-input" type="password" formControlName="repeatPassword" autocomplete="new-password" />
-        @if (f.repeatPassword.touched && form.hasError('passwordsMismatch')) {
-          <p class="register__error-text">{{ 'validation.passwordsMismatch' | translate }}</p>
-        }
-      </div>
-
-      <label class="register__label" for="reg-gender">{{ 'auth.gender' | translate }}:</label>
-      <div class="register__field">
-        <select id="reg-gender" class="text-input" formControlName="gender">
-          <option value="" disabled>{{ 'auth.selectOption' | translate }}</option>
-          <option value="Male">{{ 'auth.male' | translate }}</option>
-          <option value="Female">{{ 'auth.female' | translate }}</option>
-        </select>
-      </div>
-
-      <label class="register__label">{{ 'auth.age' | translate }}:</label>
-      <div class="register__field">
-        <app-wheel-picker
-          #ageWheel
-          [min]="8"
-          [max]="100"
-          placeholder="25"
-          [value]="f.age.value"
-          (valueChange)="setAge($event)"
-          [ariaLabel]="'auth.age' | translate"
-        />
-        @if (f.age.touched && f.age.hasError('required')) {
-          <p class="register__error-text">{{ 'validation.required' | translate }}</p>
-        } @else if (ageWheel.outOfRange()) {
-          <p class="register__error-text">{{ 'validation.outOfRange' | translate: { min: 8, max: 100 } }}</p>
-        }
-      </div>
-
-      <label class="register__label">{{ 'auth.height' | translate }}:</label>
-      <div class="register__field">
-        <div class="register__field--measure">
-          <app-wheel-picker
-            #heightWheel
-            [min]="heightRange().min"
-            [max]="heightRange().max"
-            [placeholder]="heightUnit() === 'cm' ? '175' : '69'"
-            [value]="f.height.value"
-            (valueChange)="setHeight($event)"
-            [ariaLabel]="'auth.height' | translate"
+    @if (step() === 1) {
+      <div class="register__grid">
+        <label class="register__label" for="reg-email">{{ 'auth.email' | translate }}:</label>
+        <div class="register__field">
+          <input
+            id="reg-email"
+            class="text-input"
+            type="email"
+            formControlName="email"
+            [placeholder]="'auth.emailPlaceholder' | translate"
+            autocomplete="email"
           />
-          <button type="button" class="register__unit" (click)="toggleHeightUnit()">{{ 'units.' + heightUnit() | translate }}</button>
+          @if (f.email.touched && f.email.invalid) {
+            <p class="register__error-text">{{ 'validation.email' | translate }}</p>
+          }
         </div>
-        @if (f.height.touched && f.height.hasError('required')) {
-          <p class="register__error-text">{{ 'validation.required' | translate }}</p>
-        } @else if (heightWheel.outOfRange()) {
-          <p class="register__error-text">{{ 'validation.outOfRange' | translate: { min: heightRange().min, max: heightRange().max } }}</p>
-        }
+
+        <label class="register__label" for="reg-username">{{ 'auth.username' | translate }}:</label>
+        <div class="register__field">
+          <input id="reg-username" class="text-input" type="text" formControlName="username" autocomplete="username" />
+          @if (f.username.touched && f.username.invalid) {
+            <p class="register__error-text">{{ 'validation.usernameLength' | translate }}</p>
+          }
+        </div>
+
+        <label class="register__label" for="reg-password">{{ 'auth.password' | translate }}:</label>
+        <div class="register__field">
+          <input id="reg-password" class="text-input" type="password" formControlName="password" autocomplete="new-password" />
+          <app-password-rules [value]="f.password.value" />
+        </div>
+
+        <label class="register__label" for="reg-repeat">{{ 'auth.repeatPassword' | translate }}:</label>
+        <div class="register__field">
+          <input id="reg-repeat" class="text-input" type="password" formControlName="repeatPassword" autocomplete="new-password" />
+          @if (f.repeatPassword.touched && form.hasError('passwordsMismatch')) {
+            <p class="register__error-text">{{ 'validation.passwordsMismatch' | translate }}</p>
+          }
+        </div>
       </div>
 
-      <label class="register__label">{{ 'auth.weight' | translate }}:</label>
-      <div class="register__field">
-        <div class="register__field--measure">
+      <button type="button" class="register__submit" (click)="next()">{{ 'auth.next' | translate }}</button>
+    } @else {
+      <div class="register__grid">
+        <label class="register__label" for="reg-gender">{{ 'auth.gender' | translate }}:</label>
+        <div class="register__field">
+          <select id="reg-gender" class="text-input" formControlName="gender">
+            <option value="" disabled>{{ 'auth.selectOption' | translate }}</option>
+            <option value="Male">{{ 'auth.male' | translate }}</option>
+            <option value="Female">{{ 'auth.female' | translate }}</option>
+          </select>
+        </div>
+
+        <label class="register__label">{{ 'auth.age' | translate }}:</label>
+        <div class="register__field">
           <app-wheel-picker
-            #weightWheel
-            [min]="weightRange().min"
-            [max]="weightRange().max"
-            [placeholder]="weightUnit() === 'kg' ? '75' : '165'"
-            [value]="f.weight.value"
-            (valueChange)="setWeight($event)"
-            [ariaLabel]="'auth.weight' | translate"
+            #ageWheel
+            [min]="8"
+            [max]="100"
+            placeholder="25"
+            [value]="f.age.value"
+            (valueChange)="setAge($event)"
+            [ariaLabel]="'auth.age' | translate"
           />
-          <button type="button" class="register__unit" (click)="toggleWeightUnit()">{{ 'units.' + weightUnit() | translate }}</button>
+          @if (f.age.touched && f.age.hasError('required')) {
+            <p class="register__error-text">{{ 'validation.required' | translate }}</p>
+          } @else if (ageWheel.outOfRange()) {
+            <p class="register__error-text">{{ 'validation.outOfRange' | translate: { min: 8, max: 100 } }}</p>
+          }
         </div>
-        @if (f.weight.touched && f.weight.hasError('required')) {
-          <p class="register__error-text">{{ 'validation.required' | translate }}</p>
-        } @else if (weightWheel.outOfRange()) {
-          <p class="register__error-text">{{ 'validation.outOfRange' | translate: { min: weightRange().min, max: weightRange().max } }}</p>
-        }
-      </div>
-    </div>
 
-    @if (errorText()) {
-      <p class="register__error">{{ errorText() }}</p>
+        <label class="register__label">{{ 'auth.height' | translate }}:</label>
+        <div class="register__field">
+          <div class="register__field--measure">
+            <app-wheel-picker
+              #heightWheel
+              [min]="heightRange().min"
+              [max]="heightRange().max"
+              [placeholder]="heightUnit() === 'cm' ? '175' : '69'"
+              [value]="f.height.value"
+              (valueChange)="setHeight($event)"
+              [ariaLabel]="'auth.height' | translate"
+            />
+            <button type="button" class="register__unit" (click)="toggleHeightUnit()">{{ 'units.' + heightUnit() | translate }}</button>
+          </div>
+          @if (f.height.touched && f.height.hasError('required')) {
+            <p class="register__error-text">{{ 'validation.required' | translate }}</p>
+          } @else if (heightWheel.outOfRange()) {
+            <p class="register__error-text">{{ 'validation.outOfRange' | translate: { min: heightRange().min, max: heightRange().max } }}</p>
+          }
+        </div>
+
+        <label class="register__label">{{ 'auth.weight' | translate }}:</label>
+        <div class="register__field">
+          <div class="register__field--measure">
+            <app-wheel-picker
+              #weightWheel
+              [min]="weightRange().min"
+              [max]="weightRange().max"
+              [placeholder]="weightUnit() === 'kg' ? '75' : '165'"
+              [value]="f.weight.value"
+              (valueChange)="setWeight($event)"
+              [ariaLabel]="'auth.weight' | translate"
+            />
+            <button type="button" class="register__unit" (click)="toggleWeightUnit()">{{ 'units.' + weightUnit() | translate }}</button>
+          </div>
+          @if (f.weight.touched && f.weight.hasError('required')) {
+            <p class="register__error-text">{{ 'validation.required' | translate }}</p>
+          } @else if (weightWheel.outOfRange()) {
+            <p class="register__error-text">{{ 'validation.outOfRange' | translate: { min: weightRange().min, max: weightRange().max } }}</p>
+          }
+        </div>
+      </div>
+
+      @if (errorText()) {
+        <p class="register__error">{{ errorText() }}</p>
+      }
+
+      <div class="register__actions">
+        <button type="button" class="register__back" (click)="back()">{{ 'auth.back' | translate }}</button>
+        <button type="submit" class="register__submit" [disabled]="submitting()">{{ 'auth.register' | translate }}</button>
+      </div>
     }
-
-    <button type="submit" class="register__submit" [disabled]="submitting()">{{ 'auth.register' | translate }}</button>
   </form>
 </app-modal>

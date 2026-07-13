@@ -62,6 +62,13 @@
 .profile__reset {
   align-self: flex-start;
   margin-top: auto;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.profile__reset:hover {
+  background-color: var(--color-accent);
+  color: var(--color-primary-contrast);
 }
 
 .profile__card--month {

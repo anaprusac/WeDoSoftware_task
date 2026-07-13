@@ -11,10 +11,12 @@
   margin: 0 auto;
   padding: clamp(var(--space-5), 5vw, var(--space-8));
   background-color: var(--color-bg);
+  transition: background-color var(--transition-base);
 }
 
 .welcome {
   padding-left: var(--space-4);
+  transition: color var(--transition-base);
 }
 
 .welcome__title,
@@ -22,6 +24,7 @@
 .welcome__text {
   opacity: 0;
   animation: welcome-in 700ms ease-out forwards;
+  transition: color var(--transition-base);
 }
 
 .welcome__title {
@@ -29,6 +32,7 @@
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1;
+  color: var(--color-accent);
 }
 
 .welcome__subtitle {
@@ -71,8 +75,20 @@
   color: var(--color-auth-text);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  animation: welcome-in 700ms ease-out forwards;
+  /* No `forwards` here (unlike .welcome__*): a forwards-filled animation keeps permanently owning
+     `transform` even after it finishes, which silently blocks the :hover rule below from ever
+     applying — .signin has no non-animated base value for transform/opacity, so once the entrance
+     animation ends it reverts to the same defaults `forwards` would have kept anyway, and :hover
+     regains control of transform. */
+  animation: welcome-in 700ms ease-out;
   animation-delay: 80ms;
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast), background-color var(--transition-base), color var(--transition-base);
+}
+
+/* Same lift-on-hover language as .card/.action/.wcard elsewhere in the app. */
+.signin:hover {
+  box-shadow: var(--shadow-lg), 0 12px 32px rgba(0, 0, 0, 0.18);
+  transform: translateY(-2px);
 }
 
 .signin__title {
@@ -103,13 +119,14 @@
   padding: var(--space-1);
   border: none;
   background: none;
-  color: var(--color-auth-muted);
+  color: var(--color-accent);
   font-size: var(--text-xs);
   font-weight: 600;
+  transition: color var(--transition-base);
 }
 
 .signin__link:hover {
-  color: var(--color-auth-text);
+  color: var(--color-accent-hover);
   text-decoration: underline;
 }
 

@@ -47,7 +47,10 @@
     "resetMissingToken": "Nedostaju podaci za reset. Iskoristi link iz imejla.",
     "backToLogin": "Nazad na prijavu",
     "emailPlaceholder": "tvoj@imejl.com",
-    "usernameOrEmailPlaceholder": "Korisničko ime ili imejl"
+    "usernameOrEmailPlaceholder": "Korisničko ime ili imejl",
+    "next": "Dalje",
+    "back": "Nazad",
+    "stepOf": "Korak {{current}} od {{total}}"
   },
   "passwordRules": {
     "title": "Lozinka mora da sadrži:",

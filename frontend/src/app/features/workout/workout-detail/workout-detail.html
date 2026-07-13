@@ -6,7 +6,7 @@
   } @else {
     <div class="detail__list">
       @for (workout of workouts(); track workout.id) {
-        <article class="card detail__card">
+        <article class="card detail__card" [attr.data-workout-id]="workout.id" [class.detail__card--highlight]="workout.id === highlightId">
           <div class="detail__top">
             <div class="detail__type-badge">
               <app-workout-type-icon [type]="workout.type" />

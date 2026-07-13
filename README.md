@@ -199,16 +199,10 @@ cd frontend
 npm test
 ```
 
-## API client (Bruno)
+## API client
 
-A [Bruno](https://www.usebruno.com/) collection covering every endpoint (auth, workouts, statistics,
-profile) is included at [`bruno/WeDoSoftware`](bruno/WeDoSoftware). Open the `bruno` folder as a
-collection in the Bruno app. It targets `http://localhost:8080` by default (the `Local` environment)
-— run `Auth/Login` first, which stores the access token in a collection variable that subsequent
-requests reuse automatically.
-
-Swagger (http://localhost:8080/swagger) covers the same surface interactively if you'd rather not
-install Bruno.
+Swagger (http://localhost:8080/swagger) covers the whole API surface (auth, workouts, statistics,
+profile) interactively — try any endpoint directly from there.
 
 ## Demo walkthrough
 

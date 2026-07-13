@@ -26,6 +26,7 @@ export class RegisterModal {
 
   readonly submitting = signal(false);
   readonly errorText = signal<string | null>(null);
+  readonly step = signal<1 | 2>(1);
 
   readonly heightUnit = signal<'cm' | 'in'>('cm');
   readonly weightUnit = signal<'kg' | 'lb'>('kg');
@@ -60,6 +61,25 @@ export class RegisterModal {
 
   get f() {
     return this.form.controls;
+  }
+
+  private readonly step1Controls = ['email', 'username', 'password', 'repeatPassword'] as const;
+
+  get step1Valid(): boolean {
+    return this.step1Controls.every((name) => this.f[name].valid) && !this.form.hasError('passwordsMismatch');
+  }
+
+  next(): void {
+    if (!this.step1Valid) {
+      this.step1Controls.forEach((name) => this.f[name].markAsTouched());
+      return;
+    }
+    this.step.set(2);
+  }
+
+  back(): void {
+    this.errorText.set(null);
+    this.step.set(1);
   }
 
   setAge(value: number | null): void {

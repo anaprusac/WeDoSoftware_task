@@ -1,3 +1,12 @@
+.register__step-indicator {
+  margin: calc(-1 * var(--space-2)) 0 var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-auth-text) 65%, transparent);
+}
+
 .register {
   display: flex;
   flex-direction: column;
@@ -74,12 +83,34 @@
   background-color: var(--color-field-on-dark);
   color: var(--color-field-on-dark-text);
   font-weight: 700;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .register__submit:hover:not(:disabled) {
   background-color: color-mix(in srgb, var(--color-field-on-dark) 88%, white);
+  transform: translateY(-1px);
 }
 
 .register__submit:disabled {
   opacity: 0.6;
+}
+
+.register__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.register__back {
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid color-mix(in srgb, var(--color-auth-text) 30%, transparent);
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--color-auth-text);
+  font-weight: 700;
+}
+
+.register__back:hover {
+  background-color: color-mix(in srgb, var(--color-auth-text) 12%, transparent);
 }

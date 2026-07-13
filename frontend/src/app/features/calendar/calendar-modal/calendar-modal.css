@@ -83,6 +83,7 @@
   background-color: var(--color-surface-2);
   color: var(--color-text-muted);
   font-weight: 600;
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
 }
 
 .cal__day--empty {
@@ -90,14 +91,15 @@
 }
 
 .cal__day--has {
-  background-color: var(--color-surface-inverse);
-  color: var(--color-text-inverse);
+  background-color: var(--color-accent);
+  color: var(--color-accent-contrast);
   cursor: pointer;
 }
 
 .cal__day--has:hover {
   background-color: var(--color-primary);
   color: var(--color-primary-contrast);
+  transform: scale(1.12);
 }
 
 .cal__day:disabled {

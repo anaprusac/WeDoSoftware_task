@@ -21,8 +21,8 @@
   --color-primary-contrast: #ffffff;
 
   /* Accent — used sparingly for focus rings, links and active states */
-  --color-accent: #2f7a52;
-  --color-accent-hover: #276643;
+  --color-accent: #00bfff;
+  --color-accent-hover: #0099cc;
   --color-accent-contrast: #ffffff;
 
   /* Semantic */
@@ -33,7 +33,7 @@
   --color-info: #2f6f9f;
 
   /* Focus ring */
-  --color-focus: #2f7a52;
+  --color-focus: #00bfff;
 
   /* Overlay for modals */
   --color-overlay: rgba(20, 22, 25, 0.55);
@@ -76,6 +76,11 @@
 }
 
 :root[data-theme="dark"] {
+  /* Tells the browser to render native form-control chrome (date/time picker icons, scrollbars,
+     etc.) in dark-appropriate colors instead of always-black — without this, the calendar/clock
+     icon on <input type="date"/"time"> stayed black and was invisible against a dark field. */
+  color-scheme: dark;
+
   --color-bg: #16171a;
   --color-surface: #202226;
   --color-surface-2: #26282d;
@@ -90,13 +95,13 @@
   --color-primary-hover: #d3d6db;
   --color-primary-contrast: #17181b;
 
-  --color-accent: #52a97b;
-  --color-accent-hover: #63bd8c;
-  --color-accent-contrast: #10221a;
+  --color-accent: #00ffff;
+  --color-accent-hover: #66ffff;
+  --color-accent-contrast: #000000;
 
   --color-danger: #e5675a;
   --color-success: #5cb85c;
-  --color-focus: #52a97b;
+  --color-focus: #00ffff;
 
   --color-overlay: rgba(0, 0, 0, 0.62);
 
@@ -116,6 +121,10 @@
 
 * {
   margin: 0;
+}
+
+html {
+  scrollbar-gutter: stable;
 }
 
 html,

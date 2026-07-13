@@ -16,6 +16,32 @@
   gap: var(--space-4);
 }
 
+/* Arriving here from a specific workout's magnifier on the home dashboard — draw the eye straight
+   to that one card instead of leaving the user to scan the whole day's list for it. */
+.detail__card--highlight {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md), 0 0 0 3px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  animation: detail-highlight-pulse 1.4s ease-out 1;
+}
+
+@keyframes detail-highlight-pulse {
+  0% {
+    box-shadow: var(--shadow-md), 0 0 0 3px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  }
+  50% {
+    box-shadow: var(--shadow-md), 0 0 0 9px color-mix(in srgb, var(--color-accent) 15%, transparent);
+  }
+  100% {
+    box-shadow: var(--shadow-md), 0 0 0 3px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail__card--highlight {
+    animation: none;
+  }
+}
+
 .detail__top {
   display: flex;
   align-items: center;
