@@ -2,21 +2,23 @@ import { DecimalPipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { ProfileService } from '../../core/services/profile.service';
 import { StatisticsService } from '../../core/services/statistics.service';
 import { ToastService } from '../../core/services/toast.service';
+import { WorkoutService } from '../../core/services/workout.service';
 import { formatDuration } from '../../core/util/format';
 import { InfoTooltip } from '../../shared/components/info-tooltip/info-tooltip';
+import { MonthCalendar } from '../../shared/components/month-calendar/month-calendar';
 import { ChangePasswordModal } from './change-password-modal/change-password-modal';
 
 /** Profile page (frame 8): auto-saving height/weight (+ live BMI) and a snapshot of this month's activity. */
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule, TranslatePipe, DecimalPipe, RouterLink, InfoTooltip, ChangePasswordModal],
+  imports: [ReactiveFormsModule, TranslatePipe, DecimalPipe, RouterLink, InfoTooltip, ChangePasswordModal, MonthCalendar],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -25,8 +27,10 @@ export class Profile {
   private readonly authService = inject(AuthService);
   private readonly profileService = inject(ProfileService);
   private readonly statisticsService = inject(StatisticsService);
+  private readonly workoutService = inject(WorkoutService);
   private readonly toast = inject(ToastService);
   private readonly translate = inject(TranslateService);
+  private readonly router = inject(Router);
 
   readonly user = this.authService.user;
   readonly changePasswordOpen = signal(false);
@@ -44,6 +48,9 @@ export class Profile {
   readonly weightForDisplay = computed(() => this.formValue().weight);
 
   readonly monthSummary = signal<{ count: number; durationLabel: string } | null>(null);
+  readonly monthWorkoutDays = signal<ReadonlySet<string>>(new Set());
+  readonly currentYear = new Date().getFullYear();
+  readonly currentMonth = new Date().getMonth() + 1;
 
   // Tracks what was last confirmed saved so the debounced watcher below can tell which of the two
   // fields actually changed (to fire the right one of the four distinct toasts the user asked for,
@@ -120,12 +127,18 @@ export class Profile {
       });
   }
 
+  goToDay(date: string): void {
+    this.router.navigate(['/workouts/date', date]);
+  }
+
   private loadMonthSummary(): void {
-    const now = new Date();
-    this.statisticsService.getMonthly(now.getFullYear(), now.getMonth() + 1).subscribe((data) => {
+    this.statisticsService.getMonthly(this.currentYear, this.currentMonth).subscribe((data) => {
       const count = data.weeks.reduce((sum, week) => sum + week.workoutCount, 0);
       const minutes = data.weeks.reduce((sum, week) => sum + week.totalDurationMinutes, 0);
       this.monthSummary.set({ count, durationLabel: formatDuration(minutes) });
+    });
+    this.workoutService.getCalendarDays(this.currentYear, this.currentMonth).subscribe((days) => {
+      this.monthWorkoutDays.set(new Set(days));
     });
   }
 

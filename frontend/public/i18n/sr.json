@@ -116,6 +116,8 @@
     "title": "Pronađi trening",
     "prevMonth": "Prethodni mesec",
     "nextMonth": "Sledeći mesec",
+    "month": "Mesec",
+    "year": "Godina",
     "hint": "Mogu se otvoriti samo dani sa zabeleženim treninzima."
   },
   "detail": {

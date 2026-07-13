@@ -75,12 +75,14 @@ export class AddWorkout {
     return type ? (type as WorkoutType) : null;
   });
 
-  /** Workout types sorted by their localized label. */
+  /** Workout types sorted by their localized label, with "Other" always pinned last as a catch-all. */
   readonly types = computed(() => {
     const lang = this.language.lang();
-    return WORKOUT_TYPES.map((type) => ({ value: type, label: this.translate.instant(`workoutType.${type}`) })).sort(
-      (a, b) => a.label.localeCompare(b.label, lang),
-    );
+    return WORKOUT_TYPES.map((type) => ({ value: type, label: this.translate.instant(`workoutType.${type}`) })).sort((a, b) => {
+      if (a.value === 'Other') return 1;
+      if (b.value === 'Other') return -1;
+      return a.label.localeCompare(b.label, lang);
+    });
   });
 
   async cancel(): Promise<void> {

@@ -1,3 +1,52 @@
+/* Fixed to the viewport edge (not the content column) so they sit in whatever margin space the
+   page has and never push/shift the actual content. */
+.stats__page-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: 1.5rem;
+  line-height: 1;
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.stats__page-nav:hover:not(:disabled) {
+  background-color: var(--color-surface-2);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.stats__page-nav:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.stats__page-nav--prev {
+  left: var(--space-4);
+}
+
+.stats__page-nav--next {
+  right: var(--space-4);
+}
+
+@media (max-width: 1480px) {
+  /* Below this, the content column (1280px + padding, centered) reaches close enough to the
+     viewport edge that the buttons would sit on top of it instead of in the margin. */
+  .stats__page-nav {
+    display: none;
+  }
+}
+
 .stats__header {
   display: flex;
   align-items: center;
@@ -32,10 +81,17 @@
   gap: var(--space-4) var(--space-8);
 }
 
+.stats__mini-cal {
+  flex-shrink: 0;
+}
+
 .stats__summary {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: var(--space-1);
+  flex: 1;
+  min-width: 200px;
 }
 
 .stats__week-title {

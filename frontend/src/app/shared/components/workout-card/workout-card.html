@@ -3,13 +3,21 @@
   <div class="wcard__body">
     <div class="wcard__top">
       <span class="wcard__type">
-        <app-workout-type-icon [type]="workout().type" />
+        <app-workout-type-icon [type]="workout().type" class="wcard__type-icon" />
         {{ 'workoutType.' + workout().type | translate }}
       </span>
       <span class="wcard__duration">{{ duration() }}</span>
     </div>
-    <p class="wcard__metric">{{ 'workout.intensity' | translate }} {{ workout().intensity }}/10</p>
-    <p class="wcard__metric">{{ 'workout.tiredness' | translate }} {{ workout().tiredness }}/10</p>
+    <div class="wcard__metrics">
+      <div class="wcard__metric">
+        <span class="wcard__metric-value">{{ workout().intensity }}<span class="wcard__metric-scale">/10</span></span>
+        <span class="wcard__metric-label">{{ 'workout.intensity' | translate }}</span>
+      </div>
+      <div class="wcard__metric">
+        <span class="wcard__metric-value">{{ workout().tiredness }}<span class="wcard__metric-scale">/10</span></span>
+        <span class="wcard__metric-label">{{ 'workout.tiredness' | translate }}</span>
+      </div>
+    </div>
 
     <a class="wcard__view" [routerLink]="['/workouts/date', dateParam()]" [attr.aria-label]="'workout.viewDetail' | translate">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

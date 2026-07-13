@@ -1,0 +1,71 @@
+:host {
+  display: block;
+}
+
+.mcal {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 140px;
+}
+
+.mcal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.mcal__weekday {
+  text-align: center;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.mcal__day {
+  aspect-ratio: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 3px;
+  background-color: var(--color-surface-2);
+  color: var(--color-text-muted);
+  font-size: 9px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.mcal__day--empty {
+  background-color: transparent;
+}
+
+.mcal__day:disabled {
+  cursor: default;
+}
+
+/* Belongs to the week being called out on this card — a subtle wash, layered under the stronger
+   "workout happened" state below. */
+.mcal__day--range {
+  background-color: color-mix(in srgb, var(--color-accent) 20%, var(--color-surface-2));
+  color: var(--color-text);
+}
+
+.mcal__day--has {
+  background-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+  cursor: pointer;
+}
+
+.mcal__day--has:hover {
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+  transform: scale(1.12);
+}
+
+.mcal__day--today {
+  outline: 1px solid var(--color-focus);
+  outline-offset: -1px;
+}

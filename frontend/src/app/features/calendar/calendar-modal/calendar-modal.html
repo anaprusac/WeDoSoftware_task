@@ -3,8 +3,16 @@
     <div class="cal__header">
       <button type="button" class="cal__nav" (click)="prevMonth()" [disabled]="loading()" [attr.aria-label]="'calendar.prevMonth' | translate">‹</button>
       <div class="cal__title">
-        <span class="cal__month">{{ monthLabel() }}</span>
-        <span class="cal__year">{{ year() }}</span>
+        <select class="cal__select cal__select--month" (change)="onMonthChange($any($event.target).value)" [attr.aria-label]="'calendar.month' | translate">
+          @for (option of months(); track option.value) {
+            <option [value]="option.value" [selected]="option.value === month()">{{ option.label }}</option>
+          }
+        </select>
+        <select class="cal__select" (change)="onYearChange($any($event.target).value)" [attr.aria-label]="'calendar.year' | translate">
+          @for (y of years; track y) {
+            <option [value]="y" [selected]="y === year()">{{ y }}</option>
+          }
+        </select>
       </div>
       <button type="button" class="cal__nav" (click)="nextMonth()" [disabled]="loading() || !canGoNext()" [attr.aria-label]="'calendar.nextMonth' | translate">›</button>
     </div>

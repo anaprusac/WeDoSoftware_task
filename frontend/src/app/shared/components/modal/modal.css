@@ -25,9 +25,11 @@
   overflow-y: auto;
   padding: var(--space-6);
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border-strong);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  /* A soft accent-tinted outer ring on top of the usual drop shadow, so the popup reads as clearly
+     framed against the blurred backdrop instead of just floating there. */
+  box-shadow: var(--shadow-lg), 0 0 0 4px color-mix(in srgb, var(--color-accent) 10%, transparent);
   animation: modal-panel-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 

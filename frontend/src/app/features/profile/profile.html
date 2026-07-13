@@ -5,14 +5,16 @@
     <section class="card profile__card">
       <h2 class="profile__card-title">{{ 'profile.account' | translate }}</h2>
       <p class="profile__row">
-        <span class="profile__label">{{ 'profile.username' | translate }}:</span> {{ user()?.username }}
+        <span class="profile__label">{{ 'profile.username' | translate }}:</span>
+        <span class="profile__value">{{ user()?.username }}</span>
       </p>
       <p class="profile__row">
-        <span class="profile__label">{{ 'auth.email' | translate }}:</span> {{ user()?.email }}
+        <span class="profile__label">{{ 'auth.email' | translate }}:</span>
+        <span class="profile__value">{{ user()?.email }}</span>
       </p>
       <p class="profile__row">
         <span class="profile__label">{{ 'profile.gender' | translate }}:</span>
-        {{ ('auth.' + (user()?.gender ?? 'Male').toLowerCase()) | translate }}
+        <span class="profile__value">{{ ('auth.' + (user()?.gender ?? 'Male').toLowerCase()) | translate }}</span>
       </p>
 
       <button type="button" class="btn btn--ghost profile__reset" (click)="changePasswordOpen.set(true)">
@@ -53,18 +55,27 @@
     <section class="card profile__card profile__card--month">
       <h2 class="profile__card-title">{{ 'profile.thisMonth' | translate }}</h2>
 
-      @if (monthSummary(); as summary) {
-        <div class="profile__metrics">
-          <div class="profile__metric">
-            <span class="profile__metric-value">{{ summary.count }}</span>
-            <span class="profile__metric-label">{{ 'statistics.sessions' | translate }}</span>
+      <div class="profile__month-row">
+        @if (monthSummary(); as summary) {
+          <div class="profile__metrics">
+            <div class="profile__metric">
+              <span class="profile__metric-value">{{ summary.count }}</span>
+              <span class="profile__metric-label">{{ 'statistics.sessions' | translate }}</span>
+            </div>
+            <div class="profile__metric">
+              <span class="profile__metric-value">{{ summary.durationLabel }}</span>
+              <span class="profile__metric-label">{{ 'statistics.totalSuffix' | translate }}</span>
+            </div>
           </div>
-          <div class="profile__metric">
-            <span class="profile__metric-value">{{ summary.durationLabel }}</span>
-            <span class="profile__metric-label">{{ 'statistics.totalSuffix' | translate }}</span>
-          </div>
-        </div>
-      }
+        }
+
+        <app-month-calendar
+          [year]="currentYear"
+          [month]="currentMonth"
+          [workoutDays]="monthWorkoutDays()"
+          (daySelected)="goToDay($event)"
+        />
+      </div>
 
       <a class="link-button profile__stats-link" routerLink="/statistics">{{ 'profile.viewStatistics' | translate }} →</a>
     </section>

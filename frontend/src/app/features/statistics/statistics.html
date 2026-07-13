@@ -1,4 +1,25 @@
 <div class="stats">
+  <button
+    type="button"
+    class="stats__page-nav stats__page-nav--prev"
+    (click)="prevMonth()"
+    [disabled]="!canGoPrev()"
+    [title]="'calendar.prevMonth' | translate"
+    [attr.aria-label]="'calendar.prevMonth' | translate"
+  >
+    ‹
+  </button>
+  <button
+    type="button"
+    class="stats__page-nav stats__page-nav--next"
+    (click)="nextMonth()"
+    [disabled]="!canGoNext()"
+    [title]="'calendar.nextMonth' | translate"
+    [attr.aria-label]="'calendar.nextMonth' | translate"
+  >
+    ›
+  </button>
+
   <div class="stats__header">
     <h1 class="page-title">{{ 'statistics.title' | translate }}</h1>
 
@@ -21,6 +42,15 @@
     <div class="stats__grid">
       @for (week of data()!.weeks; track week.weekStart) {
         <article class="card stats__card">
+          <app-month-calendar
+            class="stats__mini-cal"
+            [year]="year()"
+            [month]="month()"
+            [workoutDays]="workoutDaysInWeek(week.weekStart, week.weekEnd)"
+            [highlightStart]="week.weekStart"
+            [highlightEnd]="week.weekEnd"
+            (daySelected)="goToDay($event)"
+          />
           <div class="stats__summary">
             <h2 class="stats__week-title">{{ weekRangeLabel(week.weekStart, week.weekEnd) }}</h2>
             <p class="stats__total">

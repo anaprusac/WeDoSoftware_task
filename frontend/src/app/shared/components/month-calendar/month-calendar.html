@@ -1,0 +1,29 @@
+<div class="mcal">
+  @if (showWeekdays()) {
+    <div class="mcal__grid">
+      @for (label of weekdayLabels(); track $index) {
+        <span class="mcal__weekday">{{ label }}</span>
+      }
+    </div>
+  }
+
+  <div class="mcal__grid">
+    @for (cell of cells(); track $index) {
+      @if (cell) {
+        <button
+          type="button"
+          class="mcal__day"
+          [class.mcal__day--range]="cell.inHighlightRange"
+          [class.mcal__day--has]="cell.hasWorkout"
+          [class.mcal__day--today]="cell.isToday"
+          [disabled]="!cell.clickable"
+          (click)="select(cell)"
+        >
+          {{ cell.day }}
+        </button>
+      } @else {
+        <span class="mcal__day mcal__day--empty"></span>
+      }
+    }
+  </div>
+</div>

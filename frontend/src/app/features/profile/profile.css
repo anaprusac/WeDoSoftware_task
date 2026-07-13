@@ -1,6 +1,9 @@
 .profile__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  /* auto-fit (not auto-fill): with only 3 cards, this collapses unused empty tracks and lets the
+     existing cards stretch to fill the row, so they read as sized to the page rather than islands
+     floating in leftover space. */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--space-5);
   align-items: start;
   margin-top: var(--space-6);
@@ -22,12 +25,19 @@
 .profile__row {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--space-2);
   font-size: var(--text-lg);
 }
 
 .profile__label {
   font-weight: 600;
+  flex-shrink: 0;
+}
+
+.profile__value {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .profile__input {
@@ -56,6 +66,13 @@
 
 .profile__card--month {
   justify-content: space-between;
+}
+
+.profile__month-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
 }
 
 .profile__metrics {

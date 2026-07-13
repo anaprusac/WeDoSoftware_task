@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '../../../core/services/language.service';
 import { WorkoutService } from '../../../core/services/workout.service';
+import { buildMonthCells } from '../../../core/util/calendar';
 import { toDateInputValue } from '../../../core/util/format';
 import { toIntlLocale } from '../../../core/util/locale';
 import { Modal } from '../../../shared/components/modal/modal';
 
-const pad = (value: number): string => String(value).padStart(2, '0');
+const YEARS_BACK = 5;
 
 interface DayCell {
   date: string;
@@ -35,15 +36,20 @@ export class CalendarModal {
   readonly loading = signal(false);
 
   private readonly today = new Date();
-  readonly year = signal(this.today.getFullYear());
-  readonly month = signal(this.today.getMonth() + 1); // 1-12
+  private readonly currentYear = this.today.getFullYear();
+  private readonly currentMonth = this.today.getMonth() + 1;
+
+  readonly year = signal(this.currentYear);
+  readonly month = signal(this.currentMonth); // 1-12
   private readonly workoutDays = signal<Set<string>>(new Set());
 
-  readonly monthLabel = computed(() =>
-    new Intl.DateTimeFormat(toIntlLocale(this.language.lang()), { month: 'long' }).format(
-      new Date(this.year(), this.month() - 1, 1),
-    ),
-  );
+  readonly years = Array.from({ length: YEARS_BACK + 1 }, (_, i) => this.currentYear - i);
+
+  readonly months = computed(() => {
+    const maxMonth = this.year() === this.currentYear ? this.currentMonth : 12;
+    const format = new Intl.DateTimeFormat(toIntlLocale(this.language.lang()), { month: 'long' });
+    return Array.from({ length: maxMonth }, (_, i) => ({ value: i + 1, label: format.format(new Date(2024, i, 1)) }));
+  });
 
   readonly weekdays = computed(() => {
     // 2024-01-01 is a Monday — build Monday-first localized short names.
@@ -52,26 +58,18 @@ export class CalendarModal {
   });
 
   readonly cells = computed<(DayCell | null)[]>(() => {
-    const year = this.year();
-    const month = this.month();
-    const daysInMonth = new Date(year, month, 0).getDate();
-    const firstWeekday = (new Date(year, month - 1, 1).getDay() + 6) % 7; // Monday = 0
     const days = this.workoutDays();
     const todayStr = toDateInputValue(this.today);
 
-    const cells: (DayCell | null)[] = Array.from({ length: firstWeekday }, () => null);
-    for (let day = 1; day <= daysInMonth; day++) {
-      const date = `${year}-${pad(month)}-${pad(day)}`;
-      const hasWorkout = days.has(date);
-      cells.push({ date, day, hasWorkout, clickable: hasWorkout && date <= todayStr, isToday: date === todayStr });
-    }
-    return cells;
+    return buildMonthCells(this.year(), this.month()).map((cell) => {
+      if (!cell) return null;
+      const hasWorkout = days.has(cell.date);
+      return { ...cell, hasWorkout, clickable: hasWorkout && cell.date <= todayStr, isToday: cell.date === todayStr };
+    });
   });
 
   readonly canGoNext = computed(() => {
-    const currentYear = this.today.getFullYear();
-    const currentMonth = this.today.getMonth() + 1;
-    return this.year() < currentYear || (this.year() === currentYear && this.month() < currentMonth);
+    return this.year() < this.currentYear || (this.year() === this.currentYear && this.month() < this.currentMonth);
   });
 
   constructor() {
@@ -100,6 +98,26 @@ export class CalendarModal {
       this.year.update((y) => y + 1);
     } else {
       this.month.update((m) => m + 1);
+    }
+    this.loadMonth();
+  }
+
+  onMonthChange(value: string): void {
+    if (this.loading()) {
+      return;
+    }
+    this.month.set(Number(value));
+    this.loadMonth();
+  }
+
+  onYearChange(value: string): void {
+    if (this.loading()) {
+      return;
+    }
+    const newYear = Number(value);
+    this.year.set(newYear);
+    if (newYear === this.currentYear && this.month() > this.currentMonth) {
+      this.month.set(this.currentMonth);
     }
     this.loadMonth();
   }
